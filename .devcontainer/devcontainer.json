@@ -2,7 +2,9 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
    "name": "ch-lex-bot",
-   "build": "Dockerfile",
+   "build": {
+         "dockerfile": "Dockerfile"
+   },
    "features": {
       "ghcr.io/devcontainers-community/features/direnv:1": {}
    }
