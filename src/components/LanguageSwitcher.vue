@@ -42,13 +42,15 @@
         };
         },
         created() {
-        const currentLocale = this.locales.find(locale => locale.value === this.$i18n.locale) || this.locales[0];
-        this.selectedLocale = currentLocale;
+        const savedLocale = localStorage.getItem('userLanguage') || this.locales[0];
+        console.log("saved locale: " + savedLocale);
+        this.selectedLocale = savedLocale;
         },
         methods: {
             changeLanguage(newLocale) {
                 if (newLocale) {
                     this.$i18n.locale = newLocale;
+                    localStorage.setItem('userLanguage', newLocale);
                     console.log("locale changed to " + newLocale);
                 }
             }
