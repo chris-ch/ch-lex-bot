@@ -109,5 +109,6 @@
   white-space: pre-wrap;
   word-wrap: break-word;
   line-height: 1.4;
+  padding: 12px;
 }
 </style>
