@@ -2,13 +2,15 @@
 import { onMounted } from "vue";
 import { register } from "@teamhanko/hanko-elements";
 
+// Define the event emitter for onSessionCreated
+const emit = defineEmits(['onSessionCreated']);
+
 const hankoApi = process.env.VUE_APP_HANKO_API_URL;
-console.log("Hanko API URL:", hankoApi);
 
 // Event handler function for when a session is created
 const onAuthenticated = (event) => {
-  console.log("session created:", event.detail);
-  // You can handle the session creation logic here, such as storing user info
+  console.log("autentication succeeded:", event.detail);
+  emit('onSessionCreated', event.detail);
 };
 
 onMounted(() => {

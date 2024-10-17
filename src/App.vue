@@ -6,27 +6,22 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';  // Import ref to create reactive state
 import HelloWorld from './components/HelloWorld.vue'
 import HankoAuth from './components/HankoAuth.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld,
-    HankoAuth
-  },
-  data() {
-    return {
-      isAuthenticated: false  // Initial state: user is not authenticated
-    }
-  },
-  methods: {
-    onAuthenticated() {
-      this.isAuthenticated = true;
-    }
-  }
-}
+// Reactive state for tracking authentication
+const isAuthenticated = ref(false);
+
+// Event handler function for when a session is created
+const onAuthenticated = (event) => {
+  console.log('session created:', event.detail);
+  
+  // Update the state to reflect that the user is authenticated
+  isAuthenticated.value = true;
+};
+
 </script>
 
 <style>

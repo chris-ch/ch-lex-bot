@@ -31,7 +31,7 @@ importers:
         specifier: ^7.12.16
         version: 7.25.8
       '@babel/eslint-parser':
-        specifier: ^7.12.16
+        specifier: ^7.25.8
         version: 7.25.8(@babel/core@7.25.8)(eslint@7.32.0)
       '@types/node':
         specifier: ^22.7.6
@@ -49,7 +49,7 @@ importers:
         specifier: ^7.32.0
         version: 7.32.0
       eslint-plugin-vue:
-        specifier: ^8.0.3
+        specifier: ^8.7.1
         version: 8.7.1(eslint@7.32.0)
 
 packages:
