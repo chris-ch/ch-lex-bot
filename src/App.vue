@@ -8,55 +8,82 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <LanguageSwitcher />
-      <v-btn @click="logout" v-if="isAuthenticated">Sign out</v-btn>
+      <v-btn @click="logout" v-if="isAuthenticated()">Sign out</v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
-        <img alt="Vue logo" src="./assets/logo.svg" width="100" v-if="isAuthenticated">
-        <ChatBot v-if="isAuthenticated" />
-        <HankoAuth v-if="!isAuthenticated" @onSessionCreated="onAuthenticated" />
+        <img alt="Vue logo" src="./assets/logo.svg" width="100" v-if="isAuthenticated()">
+        <ChatBot v-if="isAuthenticated() && userInfo && userInfo.mistralAPIKey" />
+        <div v-if="isAuthenticated() && (!userInfo || !userInfo.mistralAPIKey)">
+          <p>Please enter your Mistral API Key:</p>
+          <input v-model="mistralAPIKeyInput" placeholder="Enter Mistral API Key" />
+          <button @click="setMistralAPIKey">Submit</button>
+        </div>
+        <HankoAuth v-if="!isAuthenticated()" @onSessionCreated="onAuthenticated" />
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import { ref } from 'vue';  // Import ref to create reactive state
-import { onMounted, getCurrentInstance } from 'vue';
+  import { ref, onMounted, getCurrentInstance  } from 'vue';
 
-import LanguageSwitcher from './components/LanguageSwitcher.vue';
-import HankoAuth from './components/HankoAuth.vue';
-import ChatBot from './components/ChatBot.vue';
+  import LanguageSwitcher from './components/LanguageSwitcher.vue';
+  import HankoAuth from './components/HankoAuth.vue';
+  import ChatBot from './components/ChatBot.vue';
 
-// Reactive state for tracking authentication
-const isAuthenticated = ref(false);
+  // Reactive state for tracking authentication
+  const userInfo = ref(null);
+  const mistralAPIKeyInput = ref('');
 
-// Check for JWT in localStorage on app load
-const token = localStorage.getItem('authToken');
-if (token) {
-  // Mark user as authenticated if token exists
-  isAuthenticated.value = true;
-}
+  // Initialize userInfo on component creation
+  const storedUserInfo = localStorage.getItem('userInfo');
+  if (storedUserInfo) {
+    userInfo.value = JSON.parse(storedUserInfo);
+  }
 
-// Event handler function for when a session is created
-const onAuthenticated = (event) => {
-  console.log('session created:', event.detail);
-  
-  // Update the state to reflect that the user is authenticated
-  isAuthenticated.value = true;
-};
+  // Event handler function for when a session is created
+  const onAuthenticated = (event) => {
+    console.log('session created:', event.detail);
+    
+    // Update the state
+    userInfo.value = JSON.parse(localStorage.getItem('userInfo'));
+  };
 
-// Logout function to clear the token and log the user out
-const logout = () => {
-  localStorage.removeItem('authToken'); // Clear the token from storage
-  isAuthenticated.value = false;        // Mark the user as logged out
-};
+  // Logout function to clear the token and log the user out
+  const logout = () => {
+    localStorage.removeItem('userInfo'); // Clear the token from storage
+    userInfo.value = null;
+  };
 
-const { proxy } = getCurrentInstance();
+  const setMistralAPIKey = () => {
+    if (mistralAPIKeyInput.value.trim()) {
+      const updatedUserInfo = {
+        ...userInfo.value,
+        mistralAPIKey: mistralAPIKeyInput.value.trim(),
+      };
 
-onMounted(() => {
-  console.log(proxy.$i18n.locale); // This should print 'en' or the current locale
-});
+      // Save the updated data into localStorage
+      localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
+
+      // Update the state
+      userInfo.value = updatedUserInfo;
+
+      // Clear the input field
+      mistralAPIKeyInput.value = '';
+    } else {
+      alert('Please enter a valid Mistral API Key.');
+    }
+  };
+
+  onMounted(() => {
+    const { proxy } = getCurrentInstance();
+    console.log("current locale: " + proxy.$i18n.locale);
+  });
+
+  const isAuthenticated = () => {
+    return !!userInfo.value?.authToken;
+  };
 
 </script>
 

@@ -10,8 +10,11 @@ const hankoApi = process.env.VUE_APP_HANKO_API_URL;
 // Event handler function for when a session is created
 const onAuthenticated = (event) => {
   console.log("autentication succeeded:", event);
-  const jwt = event.detail.jwt;
-  localStorage.setItem('authToken', jwt);
+  const userInfo = {
+    authToken: event.detail.jwt,
+    mistralAPIKey: undefined
+  };
+  localStorage.setItem('userInfo', JSON.stringify(userInfo));
   emit('onSessionCreated', event.detail);
 };
 
