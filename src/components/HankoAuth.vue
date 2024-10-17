@@ -9,7 +9,9 @@ const hankoApi = process.env.VUE_APP_HANKO_API_URL;
 
 // Event handler function for when a session is created
 const onAuthenticated = (event) => {
-  console.log("autentication succeeded:", event.detail);
+  console.log("autentication succeeded:", event);
+  const jwt = event.detail.jwt;
+  localStorage.setItem('authToken', jwt);
   emit('onSessionCreated', event.detail);
 };
 

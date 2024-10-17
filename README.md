@@ -1,6 +1,5 @@
-# ch-lex-bot
-Swiss Legal Assistant
-
+# 💬 Lex Bot 🇨🇭
+Assistant for researching Swiss legal documents.
 
 ## Project setup
 ```
