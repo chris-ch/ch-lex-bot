@@ -1,7 +1,5 @@
 {
-    "message": {
-      "hello": "Hello",
-      "welcome": "Willkommen"
-    }
-  }
+  "hello": "Hello",
+  "welcome": "Willkommen"
+}
   

@@ -32,6 +32,9 @@ importers:
       vue-router:
         specifier: ^4.0.13
         version: 4.0.13(vue@3.5.12)
+      vuetify:
+        specifier: ^3.7.3
+        version: 3.7.3(vue@3.5.12)
     devDependencies:
       '@babel/core':
         specifier: ^7.12.16
@@ -3678,6 +3681,22 @@ packages:
       typescript: '*'
     peerDependenciesMeta:
       typescript:
+        optional: true
+
+  vuetify@3.7.3:
+    resolution: {integrity: sha512-bpuvBpZl1/+nLlXDgdVXekvMNR6W/ciaoa8CYlpeAzAARbY8zUFSoBq05JlLhkIHI58AnzKVy4c09d0OtfYAPg==}
+    engines: {node: ^12.20 || >=14.13}
+    peerDependencies:
+      typescript: '>=4.7'
+      vite-plugin-vuetify: '>=1.0.0'
+      vue: ^3.3.0
+      webpack-plugin-vuetify: '>=2.0.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+      vite-plugin-vuetify:
+        optional: true
+      webpack-plugin-vuetify:
         optional: true
 
   watchpack@2.4.2:
@@ -7881,6 +7900,10 @@ snapshots:
       '@vue/runtime-dom': 3.5.12
       '@vue/server-renderer': 3.5.12(vue@3.5.12)
       '@vue/shared': 3.5.12
+
+  vuetify@3.7.3(vue@3.5.12):
+    dependencies:
+      vue: 3.5.12
 
   watchpack@2.4.2:
     dependencies:
