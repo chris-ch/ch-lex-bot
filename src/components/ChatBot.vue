@@ -110,5 +110,6 @@
   word-wrap: break-word;
   line-height: 1.4;
   padding: 12px;
+  font-size: 18px;
 }
 </style>
