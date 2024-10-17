@@ -12,9 +12,8 @@
       :menu-props="{ contentClass: 'language-select-menu' }"
     >
       <template #selection="{ item }">
-        <span class="language-flag">{{ item?.raw?.flag || selectedLocale.flag }}</span>
+        <span class="language-flag">{{ item?.raw?.flag || selectedLocale.flag }} {{ capitalize(item.raw.value) || capitalize(selectedLocale.value) }}</span>
       </template>
-      
       <template #item="{ item, props }">
         <v-list-item 
           v-bind="props"
@@ -53,6 +52,9 @@
                     localStorage.setItem('userLanguage', newLocale);
                     console.log("locale changed to " + newLocale);
                 }
+            },
+            capitalize(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
             }
         }
     }
@@ -60,7 +62,7 @@
   
   <style scoped>
   .language-select {
-    max-width: 65px;
+    max-width: 120px;
   }
   
   .language-select :deep(.v-field) {
