@@ -27,37 +27,35 @@
     </v-select>
   </template>
   
-  <script>
-    export default {
-        data() {
-        return {
-            selectedLocale: null,
-            locales: [
-            { value: 'de', text: 'Deutsch', flag: '🇩🇪' },
-            { value: 'en', text: 'English', flag: '🇬🇧' },
-            { value: 'fr', text: 'Français', flag: '🇫🇷' },
-            { value: 'it', text: 'Italiano', flag: '🇮🇹' },
-            ],
-        };
-        },
-        created() {
-        const savedLocale = localStorage.getItem('userLanguage') || this.locales[0];
-        console.log("saved locale: " + savedLocale);
-        this.selectedLocale = savedLocale;
-        },
-        methods: {
-            changeLanguage(newLocale) {
-                if (newLocale) {
-                    this.$i18n.locale = newLocale;
-                    localStorage.setItem('userLanguage', newLocale);
-                    console.log("locale changed to " + newLocale);
-                }
-            },
-            capitalize(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            }
+  <script setup>
+    import { ref } from 'vue';
+    import { useI18n } from 'vue-i18n';
+
+    const i18n = useI18n();
+    const selectedLocale = ref(null);
+
+    const locales = [
+        { value: 'de', text: 'Deutsch', flag: '🇩🇪' },
+        { value: 'en', text: 'English', flag: '🇬🇧' },
+        { value: 'fr', text: 'Français', flag: '🇫🇷' },
+        { value: 'it', text: 'Italiano', flag: '🇮🇹' },
+    ];
+
+    const savedLocale = localStorage.getItem('userLanguage') || locales[0];
+    console.log("saved locale: " + savedLocale);
+    selectedLocale.value = savedLocale;
+
+    const changeLanguage = (newLocale) => {
+        if (newLocale) {
+            i18n.locale.value = newLocale;
+            localStorage.setItem('userLanguage', newLocale);
+            console.log("locale changed to " + newLocale);
         }
-    }
+    };
+
+    const capitalize = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
   </script>
   
   <style scoped>

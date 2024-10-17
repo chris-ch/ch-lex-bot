@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@mistralai/mistralai": "^1.1.0",
     "@teamhanko/hanko-elements": "^1.1.0",
     "@vue/compiler-sfc": "^3.5.12",
     "core-js": "^3.8.3",

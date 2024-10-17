@@ -1,5 +1,8 @@
 {
-  "hello": "Bonjour",
-  "welcome": "Bienvenue"
+  "bot.welcome": "Bienvenue sur votre assistant intelligent pour la recherche juridique."
+  ,"bot.role": "Je suis là pour vous guider dans la description de votre affaire et vous aider à trouver les documents légaux pertinents dans notre vaste base de données. Je vous poserai des questions ciblées pour comprendre les détails essentiels de votre cas. En utilisant ces informations, je parcourrai notre bibliothèque complète de jurisprudence, de lois et de commentaires juridiques pour vous fournir les ressources les plus pertinentes."
+  ,"bot.purpose": "Mon objectif est de simplifier votre processus de recherche juridique, vous permettant ainsi de vous concentrer sur l'analyse et l'application de ces informations à votre affaire spécifique."
+  ,"bot.start": "Commençons par décrire votre situation juridique !"
+  ,"mistral.key": "Veuillez renseigner votre clé d'API Mistral avant de poursuivre :"
+  ,"user.case.description": "Veuillez décrire brièvement votre situation ou question juridique..."
 }
-  

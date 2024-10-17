@@ -1,5 +1,8 @@
 {
-  "hello": "Hello",
-  "welcome": "Welcome"
-}
-  
+  "bot.welcome": "Welcome to your intelligent assistant for legal research."
+  ,"bot.role": "I am here to guide you in describing your case and to help you find relevant legal documents in our vast database. I will ask you targeted questions to understand the essential details of your case. Using this information, I will search our comprehensive library of case law, statutes, and legal commentary to provide you with the most relevant resources."
+  ,"bot.purpose": "My goal is to simplify your legal research process, allowing you to focus on analyzing and applying this information to your specific case."
+  ,"bot.start": "Let's begin by describing your legal situation!"
+  ,"mistral.key": "Please enter your Mistral API key before proceeding:"
+  ,"user.case.description": "Please briefly describe your legal situation..."
+  }

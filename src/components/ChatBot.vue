@@ -3,16 +3,14 @@
     <v-container>
       <!-- Header Section -->
       <v-card class="pa-4 rounded-xl" outlined>
-        <v-card-title>
-          <h1>💬 Lex Bot 🇨🇭</h1>
-        </v-card-title>
-        <v-card-subtitle>{{ $t('welcome') }}</v-card-subtitle>
+        <v-card-title>Lex 🇨🇭 Bot</v-card-title>
+        <v-card-subtitle>{{ $t('bot.welcome') }}</v-card-subtitle>
         <v-card-text>
-          <p>
-            For a guide and recipes on how to configure / customize this project,<br>
-            check out the
-            <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-          </p>
+          <v-text class="mb-3 text-body-1">{{ $t('bot.role') }}</v-text>
+          <br><br>
+          <v-text class="mb-3 text-body-1">{{ $t('bot.purpose') }}</v-text>
+          <br><br>
+          <v-text class="mb-3 text-body-1"><strong>{{ $t('bot.start') }}</strong></v-text>
         </v-card-text>
       </v-card>
 
@@ -39,7 +37,7 @@
           <v-col cols="10">
             <v-textarea
               v-model="userMessage"
-              label="Type a message..."
+              :label="$t('user.case.description')"
               outlined
               rounded="large"
               rows="3"
@@ -56,7 +54,7 @@
   </v-app>
 </template>
   
-  <script>
+<script>
   export default {
     data() {
       return {
@@ -81,7 +79,7 @@
       },
     },
   };
-  </script>
+</script>
   
   <style scoped>
 

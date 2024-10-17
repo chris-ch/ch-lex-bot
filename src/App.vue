@@ -15,7 +15,7 @@
         <img alt="Vue logo" src="./assets/logo.svg" width="100" v-if="isAuthenticated()">
         <ChatBot v-if="isAuthenticated() && userInfo && userInfo.mistralAPIKey" />
         <div v-if="isAuthenticated() && (!userInfo || !userInfo.mistralAPIKey)">
-          <p>Please enter your Mistral API Key:</p>
+          <p>{{ $t('mistral.key') }}</p>
           <input v-model="mistralAPIKeyInput" placeholder="Enter Mistral API Key" />
           <button @click="setMistralAPIKey">Submit</button>
         </div>
