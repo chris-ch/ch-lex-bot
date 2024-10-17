@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const { defineConfig } = require('@vue/cli-service');
-const webpack = require('webpack');
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -17,13 +16,13 @@ module.exports = defineConfig({
       });
   },
   devServer: {
-    host: 'lex-bot.streamlit.app',
+    host: process.env.VUE_APP_HOST,
     port: 8443,
     server: {
       type: 'https',
       options: {
-        key: fs.readFileSync(path.resolve(__dirname, '.certs/localhost+3-key.pem')),
-        cert: fs.readFileSync(path.resolve(__dirname, '.certs/localhost+3.pem')),
+        key: fs.readFileSync(path.resolve(__dirname, process.env.VUE_APP_SSL_KEY)),
+        cert: fs.readFileSync(path.resolve(__dirname, process.env.VUE_APP_SSL_CERT)),
       }
     }
   }
