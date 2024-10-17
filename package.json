@@ -11,7 +11,9 @@
     "@teamhanko/hanko-elements": "^1.1.0",
     "@vue/compiler-sfc": "^3.5.12",
     "core-js": "^3.8.3",
+    "jsonwebtoken": "^9.0.2",
     "vue": "^3.5.12",
+    "vue-i18n": "^10.0.4",
     "vue-loader": "^17.4.2",
     "vue-router": "^4.0.13"
   },
