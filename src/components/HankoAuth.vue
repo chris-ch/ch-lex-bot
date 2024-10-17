@@ -1,15 +1,14 @@
 <script setup>
-import { useRouter } from "vue-router";
 import { onMounted } from "vue";
 import { register } from "@teamhanko/hanko-elements";
 
 const hankoApi = process.env.VUE_APP_HANKO_API_URL;
+console.log("Hanko API URL:", hankoApi);
 
-const router = useRouter();
-
-const redirectAfterLogin = () => {
-  // successfully logged in, redirect to a page in your application
-  router.push("/dashboard");
+// Event handler function for when a session is created
+const onAuthenticated = (event) => {
+  console.log("session created:", event.detail);
+  // You can handle the session creation logic here, such as storing user info
 };
 
 onMounted(() => {
@@ -23,6 +22,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <hanko-auth v-on:onSessionCreated="redirectAfterLogin"></hanko-auth>
+    <hanko-auth @onSessionCreated="onAuthenticated"></hanko-auth>
   </div>
 </template>

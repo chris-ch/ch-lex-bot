@@ -1,19 +1,20 @@
-import { defineConfig } from '@vue/cli-service';
-import { fs } from 'fs';
-import { path } from 'path';
+const fs = require('fs');
+const path = require('path');
+const { defineConfig } = require('@vue/cli-service');
+const webpack = require('webpack');
 
-export default defineConfig({
+module.exports = defineConfig({
   transpileDependencies: true,
   chainWebpack: config => {
     config.module
       .rule('vue')
       .use('vue-loader')
       .tap(options => {
-        compilerOptions = {
+        options.compilerOptions = {
           isCustomElement: tag => tag.startsWith('hanko-')
-        }
-        return options
-      })
+        };
+        return options;
+      });
   },
   devServer: {
     host: 'lex-bot.streamlit.app',
