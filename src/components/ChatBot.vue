@@ -1,16 +1,25 @@
 <template>
   <v-app>
     <v-container>
+      <v-alert
+        v-model="showAlert"
+        type="error"
+        closable
+        transition="scale-transition"
+      >
+        {{ $t('error.unknown') }} {{ errorMessage }}
+      </v-alert>
+
       <!-- Header Section -->
       <v-card class="pa-4 rounded-xl" outlined>
         <v-card-title>Lex 🇨🇭 Bot</v-card-title>
         <v-card-subtitle>{{ $t('bot.welcome') }}</v-card-subtitle>
         <v-card-text>
-          <v-text class="mb-3 text-body-1">{{ $t('bot.role') }}</v-text>
-          <br><br>
-          <v-text class="mb-3 text-body-1">{{ $t('bot.purpose') }}</v-text>
-          <br><br>
-          <v-text class="mb-3 text-body-1"><strong>{{ $t('bot.start') }}</strong></v-text>
+          <p class="text-body-1 mb-6">{{ $t('bot.role') }}</p>
+          <p class="text-body-1 mb-6">{{ $t('bot.purpose') }}</p>
+          <p class="text-body-1">
+            <strong>{{ $t('bot.start') }}</strong>
+          </p>
         </v-card-text>
       </v-card>
 
@@ -54,34 +63,81 @@
   </v-app>
 </template>
   
-<script>
-  export default {
-    data() {
-      return {
-        userMessage: "",
-        messages: [],
-      };
-    },
-    methods: {
-      sendMessage() {
-        if (this.userMessage.trim()) {
-          this.messages.push({ sender: "user", text: this.userMessage });
-          this.getBotResponse();
-          this.userMessage = "";
+<script setup>
+  import { ref, watch } from 'vue';
+  import { Mistral } from '@mistralai/mistralai';
+
+  const userMessage = ref('');
+  const messages = ref([]);
+  const showAlert = ref(false);
+  const errorMessage = ref('');
+  const props = defineProps({
+    showUnknownError: {
+      type: String,
+      default: ''
+    }
+  });
+
+  watch(() => props.showUnknownError, (newValue) => {
+    errorMessage.value = newValue;
+    showAlert.value = !!newValue;
+  });
+
+  const mistralAPIKey = JSON.parse(localStorage.getItem('userInfo')).mistralAPIKey
+
+  const client = new Mistral({apiKey: mistralAPIKey});
+
+  function sendMessage() {
+    if (userMessage.value.trim()) {
+      messages.value.push({ sender: 'user', text: userMessage.value });
+      loadBotResponse();
+      userMessage.value = '';
+    }
+  }
+
+  async function loadBotResponse() {
+    try {
+      const llmResponse = await client.chat.complete({
+        model: 'mistral-tiny',
+        messages: [{role: 'user', content: 'What is the best French cheese?'}],
+      });
+      messages.value.push({ sender: 'bot', text: llmResponse });
+    } catch (error) {
+      // Check if the error is a 401 Unauthorized error
+      if (error.name === 'SDKError') {
+        // Extract status code
+        const statusMatch = error.message.match(/Status (\d+)/);
+        if (statusMatch) {
+          const errorStatus = parseInt(statusMatch[1], 10);
+          if (errorStatus === 401) {
+            const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
+            console.log("resetting userinfo field mistralAPIKey: ", userInfo);
+            userInfo['mistralAPIKey'] = null;
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+            console.log("new user info value: ", userInfo);
+            // TODO App page needs to refresh
+
+          } else {
+            errorMessage.value = errorStatus;
+            showAlert.value = true;
+            console.error('an error occurred:', error);
+          }
+        } else {
+          errorMessage.value = error;
+          showAlert.value = true
+          console.error('an error occurred:', error);
         }
-      },
-      getBotResponse() {
-        // Example API call - replace with your actual chatbot logic or API call
-        setTimeout(() => {
-          const botMessage = "This is a response from the bot.\nIt can span multiple lines\n\nlike so.";
-          this.messages.push({ sender: "bot", text: botMessage });
-        }, 1000);
-      },
-    },
-  };
+      } else {
+        errorMessage.value = error;
+        showAlert.value = true
+        console.error('an error occurred:', error);
+      }
+    }
+  }
+
 </script>
   
-  <style scoped>
+<style scoped>
 
 .full-width {
   width: 100%;

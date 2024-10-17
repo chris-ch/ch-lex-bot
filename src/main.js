@@ -4,6 +4,7 @@ console.log("Hanko API URL:", process.env.VUE_APP_HANKO_API_URL);
 import { createApp } from 'vue'
 import App from './App.vue'
 import i18n from './i18n';
+import '@mdi/font/css/materialdesignicons.css'
 
 import { createVuetify } from 'vuetify'
 import 'vuetify/styles'

@@ -5,4 +5,5 @@
   ,"bot.start": "Iniziamo descrivendo la Sua situazione giuridica!"
   ,"mistral.key": "La preghiamo di inserire la Sua chiave API Mistral prima di continuare:"
   ,"user.case.description": "Si prega di descrivere brevemente la sua situazione o domanda legale..."
+  ,"error.unknown": "An unkown error occurred: "
   }
