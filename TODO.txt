@@ -1,0 +1,10 @@
+Unprioritized:
+- expand width of chat
+- keep messages in session
+- add button for cleaning chat
+- add profile page for updating Mistral API key
+- customize Hanko login phase
+- add access to Hanko profile
+- complete chat workflow
+- extend with RAG
+- deployment
