@@ -10,20 +10,20 @@
     item-value="value"
     class="language-select"
     :menu-props="{ contentClass: 'language-select-menu' }"
+    :item-props="() => ({ props: { title: '' } })"
   >
     <template #selection="{ item }">
-      <span class="language-flag"
-        >{{ item?.raw?.flag || selectedLocale.flag }}
-        {{
-          capitalize(item.raw.value) || capitalize(selectedLocale.value)
-        }}</span
-      >
+      <span class="language-flag w-full">
+        {{ item.raw.flag }}
+        {{ capitalize(item.raw.value) || capitalize(selectedLocale) }}
+      </span>
     </template>
     <template #item="{ item, props }">
       <v-list-item v-bind="props" density="compact">
-        <v-list-item-title class="d-flex align-center">
+        <div class="d-flex justify-end w-100">
           <span class="language-flag">{{ item.raw.flag }}</span>
-        </v-list-item-title>
+          <span class="ms-2">{{ capitalize(item.raw.text) }}</span>
+        </div>
       </v-list-item>
     </template>
   </v-select>
@@ -34,7 +34,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const i18n = useI18n()
-const selectedLocale = ref(null)
+const selectedLocale = ref('en')
 
 const locales = [
   { value: 'de', text: 'Deutsch', flag: '🇩🇪' },
@@ -43,11 +43,12 @@ const locales = [
   { value: 'it', text: 'Italiano', flag: '🇮🇹' },
 ]
 
-const savedLocale = localStorage.getItem('userLanguage') || locales[0]
+const savedLocale = localStorage.getItem('userLanguage') || locales[0].value
 console.log('saved locale: ' + savedLocale)
+
 selectedLocale.value = savedLocale
 
-const changeLanguage = newLocale => {
+const changeLanguage = (newLocale: string) => {
   if (newLocale) {
     i18n.locale.value = newLocale
     localStorage.setItem('userLanguage', newLocale)
@@ -55,14 +56,14 @@ const changeLanguage = newLocale => {
   }
 }
 
-const capitalize = string => {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+const capitalize = (text: string) => {
+  return text.charAt(0).toUpperCase() + text.slice(1)
 }
 </script>
 
 <style scoped>
 .language-select {
-  max-width: 120px;
+  max-width: 100px;
 }
 
 .language-select :deep(.v-field) {
@@ -82,9 +83,18 @@ const capitalize = string => {
 
 .language-flag {
   font-size: 1.2em;
+  white-space: nowrap;
 }
 
 :deep(.language-select-menu) {
   min-width: 150px !important;
+}
+
+:deep(.v-list-item) {
+  padding: 0 16px !important;
+}
+
+:deep(.v-list-item-title) {
+  display: none;
 }
 </style>

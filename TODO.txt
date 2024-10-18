@@ -1,10 +1,11 @@
-Unprioritized:
-- expand width of chat
-- keep messages in session
-- add button for cleaning chat
-- add profile page for updating Mistral API key
-- customize Hanko login phase
-- add access to Hanko profile
-- complete chat workflow
-- extend with RAG
-- deployment
+Ordered:
+- make Mistral key user dependent (Critical)
+- complete chat workflow (Critical)
+- keep messages in session (Major)
+- add button for cleaning chat (Major)
+- add profile page for updating Mistral API key (Medium)
+- deployment (Critical)
+- extend with RAG (Critical)
+- expand width of chat (Medium)
+- customize Hanko login phase (Low)
+- add access to Hanko profile (Low)
