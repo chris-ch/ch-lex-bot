@@ -12,12 +12,9 @@ const userStore = useUserStore()
 // Event handler function for when a session is created
 const onAuthenticated = (event: CustomEvent<{ jwt: string }>) => {
   console.log('authentication succeeded:', event)
-  const userInfo = {
-    authToken: event.detail.jwt,
-    mistralAPIKey: undefined,
-  }
 
-  userStore.setUserInfo(userInfo)
-  console.log('stored user token: ' + userInfo.authToken)
+  userStore.setAuthToken(event.detail.jwt)
+  userStore.loadMistralAPIKey()
+  console.log('stored user token: ' + event.detail.jwt)
 }
 </script>

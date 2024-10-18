@@ -24,23 +24,22 @@
           </v-col>
         </v-row>
 
-        <!--ChatBot
-          v-if="isAuthenticated() && userInfo && userInfo.mistralAPIKey"
-        >
+        <!-- Chat Bot -->
+        <ChatBot v-if="isAuthenticated() && mistralAPIKey" />
 
-        
-        <div v-if="isAuthenticated() && (!userInfo || !userInfo.mistralAPIKey)">
-          <p>{{ $t('mistral.key') }}</p>
+        <!-- Mistral Key -->
+        <div v-if="isAuthenticated() && !mistralAPIKey">
+          <p>{{ t('mistral.key') }}</p>
           <input
-            v-model="mistralAPIKeyInput"
             placeholder="Enter Mistral API Key"
+            v-model="newMistralAPIKey"
           />
           <button @click="setMistralAPIKey">Submit</button>
-        </div/-->
+        </div>
 
         <!-- Authentication -->
         <v-row justify="center" v-if="!isAuthenticated()">
-          <v-col cols="12" md="6">
+          <v-col cols="auto">
             <HankoAuth />
           </v-col>
         </v-row>
@@ -52,14 +51,15 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+const newMistralAPIKey = ref('')
 
 import LanguageSwitcher from './components/LanguageSwitcher.vue'
 import HankoAuth from './components/HankoAuth.vue'
-//import ChatBot from './components/ChatBot.vue'
-
-// Reactive state for tracking authentication
-//const mistralAPIKeyInput = ref('')
+import ChatBot from './components/ChatBot.vue'
 
 const userStore = useUserStore()
 const { authToken, mistralAPIKey } = storeToRefs(userStore)
@@ -71,33 +71,17 @@ console.info('using Mistral API key: ' + mistralAPIKey)
 const logout = async () => {
   console.log('logging out')
   // Clear the user info from the Pinia store
-  userStore.clearUserInfo()
+  userStore.clearAuthToken()
 }
 
-/*const setMistralAPIKey = () => {
-  if (mistralAPIKeyInput.value.trim()) {
-    const updatedUserInfo = {
-      ...userInfo.value,
-      mistralAPIKey: mistralAPIKeyInput.value.trim(),
-    }
-
-    // Save the updated data into localStorage
-    localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo))
-
-    // Update the state
-    userInfo.value = updatedUserInfo
-
-    // Clear the input field
-    mistralAPIKeyInput.value = ''
+const setMistralAPIKey = () => {
+  if (newMistralAPIKey.value.trim()) {
+    userStore.setMistralAPIKey(newMistralAPIKey.value)
+    newMistralAPIKey.value = '' // Clear the input after setting
   } else {
     alert('Please enter a valid Mistral API Key.')
   }
-}*/
-
-onMounted(() => {
-  //const { proxy } = getCurrentInstance()
-  //console.log('current locale: ' + proxy.$i18n.locale)
-})
+}
 
 const isAuthenticated = (): boolean => {
   console.log('checking token: "' + authToken.value + '""')

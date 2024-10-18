@@ -14,6 +14,7 @@ import 'vuetify/styles'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { register } from '@teamhanko/hanko-elements'
+import { useUserStore } from './stores/userStore'
 
 const revautLightTheme = {
   dark: false,
@@ -83,3 +84,6 @@ app.use(vuetify)
 app.use(i18n)
 
 app.mount('#app')
+
+const userStore = useUserStore()
+userStore.init()

@@ -2,23 +2,46 @@ import { defineStore } from 'pinia'
 
 interface UserInfo {
   authToken: string
-  mistralAPIKey: string | undefined
+  mistralAPIKey: string
 }
 
 export const useUserStore = defineStore('user', {
   state: (): UserInfo => ({
     authToken: '',
-    mistralAPIKey: undefined,
+    mistralAPIKey: '',
   }),
+
   actions: {
-    setUserInfo(userInfo: UserInfo) {
-      this.authToken = userInfo.authToken
-      this.mistralAPIKey = userInfo.mistralAPIKey
+    setAuthToken(token: string) {
+      this.authToken = token
+      // Explicitly save to sessionStorage since we're using it for persistence
+      sessionStorage.setItem('authToken', token)
     },
-    clearUserInfo() {
+
+    setMistralAPIKey(value: string) {
+      this.mistralAPIKey = value
+      localStorage.setItem('mistralAPIKey', value)
+    },
+
+    clearAuthToken() {
       this.authToken = ''
-      this.mistralAPIKey = undefined
+      // Also clear from sessionStorage
+      sessionStorage.removeItem('authToken')
+    },
+
+    loadMistralAPIKey() {
+      const storedValue = localStorage.getItem('mistralAPIKey')
+      this.mistralAPIKey = storedValue !== null ? storedValue : ''
+    },
+
+    // Add method to initialize store from storage
+    init() {
+      // Load auth token from sessionStorage
+      const storedToken = sessionStorage.getItem('authToken')
+      if (storedToken) {
+        this.authToken = storedToken
+      }
+      this.loadMistralAPIKey()
     },
   },
-  persist: true,
 })

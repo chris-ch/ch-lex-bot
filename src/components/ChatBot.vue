@@ -7,18 +7,18 @@
         closable
         transition="scale-transition"
       >
-        {{ $t('error.unknown') }} {{ errorMessage }}
+        {{ t('error.unknown') }} {{ errorMessage }}
       </v-alert>
 
       <!-- Header Section -->
       <v-card class="pa-4 rounded-xl" outlined>
         <v-card-title>Lex 🇨🇭 Bot</v-card-title>
-        <v-card-subtitle>{{ $t('bot.welcome') }}</v-card-subtitle>
+        <v-card-subtitle>{{ t('bot.welcome') }}</v-card-subtitle>
         <v-card-text>
-          <p class="text-body-1 mb-6">{{ $t('bot.role') }}</p>
-          <p class="text-body-1 mb-6">{{ $t('bot.purpose') }}</p>
+          <p class="text-body-1 mb-6">{{ t('bot.role') }}</p>
+          <p class="text-body-1 mb-6">{{ t('bot.purpose') }}</p>
           <p class="text-body-1">
-            <strong>{{ $t('bot.start') }}</strong>
+            <strong>{{ t('bot.start') }}</strong>
           </p>
         </v-card-text>
       </v-card>
@@ -32,10 +32,10 @@
             :class="message.sender"
           >
             <v-chip
-              :color="message.sender === 'bot' ? 'success' : 'indigo'"
+              :color="message.sender === 'assistant' ? 'success' : 'indigo'"
               class="ma-2 message-chip full-width rounded-lg"
             >
-              <template v-slot:prepend v-if="message.sender === 'bot'">
+              <template v-slot:prepend v-if="message.sender === 'assistant'">
                 <span class="mr-1">🤖💬&NonBreakingSpace;</span>
               </template>
               <span class="message-text">{{ message.text }}</span>
@@ -50,7 +50,7 @@
           <v-col cols="10">
             <v-textarea
               v-model="userMessage"
-              :label="$t('user.case.description')"
+              :label="t('user.case.description')"
               outlined
               rounded="large"
               rows="3"
@@ -70,9 +70,19 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { Mistral } from '@mistralai/mistralai'
+import { useUserStore } from '@/stores/userStore'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+const userStore = useUserStore()
+
+interface Message {
+  sender: 'user' | 'assistant'
+  text: string
+}
 
 const userMessage = ref('')
-const messages = ref([])
+const messages = ref<Message[]>([])
 const showAlert = ref(false)
 const errorMessage = ref('')
 const props = defineProps({
@@ -90,9 +100,7 @@ watch(
   },
 )
 
-const mistralAPIKey = JSON.parse(localStorage.getItem('userInfo')).mistralAPIKey
-
-const client = new Mistral({ apiKey: mistralAPIKey })
+const client = new Mistral({ apiKey: userStore.mistralAPIKey })
 
 function sendMessage() {
   if (userMessage.value.trim()) {
@@ -108,35 +116,35 @@ async function loadBotResponse() {
       model: 'mistral-tiny',
       messages: [{ role: 'user', content: 'What is the best French cheese?' }],
     })
-    messages.value.push({ sender: 'bot', text: llmResponse })
-  } catch (error) {
-    // Check if the error is a 401 Unauthorized error
-    if (error.name === 'SDKError') {
-      // Extract status code
-      const statusMatch = error.message.match(/Status (\d+)/)
-      if (statusMatch) {
-        const errorStatus = parseInt(statusMatch[1], 10)
-        if (errorStatus === 401) {
-          const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {}
-          console.log('resetting userinfo field mistralAPIKey: ', userInfo)
-          userInfo['mistralAPIKey'] = null
-          localStorage.setItem('userInfo', JSON.stringify(userInfo))
-          console.log('new user info value: ', userInfo)
-          // TODO App page needs to refresh
+    const message =
+      (llmResponse.choices && llmResponse.choices[0].message.content) || ''
+    messages.value.push({ sender: 'assistant', text: message })
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      // Check if the error is a 401 Unauthorized error
+      if (error.name === 'SDKError') {
+        // Extract status code
+        const statusMatch = error.message.match(/Status (\d+)/)
+        if (statusMatch) {
+          const errorStatus = parseInt(statusMatch[1], 10)
+          if (errorStatus === 401) {
+            console.log('resetting userinfo field mistralAPIKey')
+            userStore.setMistralAPIKey('')
+          } else {
+            errorMessage.value = '' + errorStatus
+            showAlert.value = true
+            console.error('an error occurred:', error)
+          }
         } else {
-          errorMessage.value = errorStatus
+          errorMessage.value = error.message
           showAlert.value = true
           console.error('an error occurred:', error)
         }
       } else {
-        errorMessage.value = error
+        errorMessage.value = error.message
         showAlert.value = true
         console.error('an error occurred:', error)
       }
-    } else {
-      errorMessage.value = error
-      showAlert.value = true
-      console.error('an error occurred:', error)
     }
   }
 }
