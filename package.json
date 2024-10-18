@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "@mdi/js": "^7.4.47",
     "@mistralai/mistralai": "^1.1.0",
     "@teamhanko/hanko-elements": "^1.1.0",
     "pinia": "^2.2.4",

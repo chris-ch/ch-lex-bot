@@ -13,7 +13,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <LanguageSwitcher />
-      <v-btn @click="logout" v-if="isAuthenticated()">Sign out</v-btn>
+      <v-btn @click="logout" v-if="isAuthenticated()">{{ t('logout') }}</v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -25,17 +25,27 @@
         </v-row>
 
         <!-- Chat Bot -->
-        <ChatBot v-if="isAuthenticated() && mistralAPIKey" />
+        <v-row
+          justify="center"
+          class="my-4"
+          v-if="isAuthenticated() && mistralAPIKey"
+        >
+          <v-col cols="12" md="12" lg="12" xl="12">
+            <ChatBot />
+          </v-col>
+        </v-row>
 
         <!-- Mistral Key -->
-        <div v-if="isAuthenticated() && !mistralAPIKey">
-          <p>{{ t('mistral.key') }}</p>
-          <input
-            placeholder="Enter Mistral API Key"
-            v-model="newMistralAPIKey"
-          />
-          <button @click="setMistralAPIKey">Submit</button>
-        </div>
+        <v-row justify="center" v-if="isAuthenticated() && !mistralAPIKey">
+          <v-col cols="12" md="12" lg="12" xl="12">
+            <p>{{ t('mistral.key') }}</p>
+            <input
+              placeholder="Enter Mistral API Key"
+              v-model="newMistralAPIKey"
+            />
+            <button @click="setMistralAPIKey">Submit</button>
+          </v-col>
+        </v-row>
 
         <!-- Authentication -->
         <v-row justify="center" v-if="!isAuthenticated()">

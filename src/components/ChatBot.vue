@@ -1,68 +1,77 @@
 <template>
   <v-app>
     <v-container>
-      <v-alert
-        v-model="showAlert"
-        type="error"
-        closable
-        transition="scale-transition"
-      >
-        {{ t('error.unknown') }} {{ errorMessage }}
-      </v-alert>
-
-      <!-- Header Section -->
-      <v-card class="pa-4 rounded-xl" outlined>
-        <v-card-title>Lex 🇨🇭 Bot</v-card-title>
-        <v-card-subtitle>{{ t('bot.welcome') }}</v-card-subtitle>
-        <v-card-text>
-          <p class="text-body-1 mb-6">{{ t('bot.role') }}</p>
-          <p class="text-body-1 mb-6">{{ t('bot.purpose') }}</p>
-          <p class="text-body-1">
-            <strong>{{ t('bot.start') }}</strong>
-          </p>
-        </v-card-text>
-      </v-card>
-
-      <!-- Chat Messages Section -->
-      <v-card class="pa-4 mt-4 rounded-xl" outlined v-if="messages.length">
-        <div class="messages">
-          <div
-            v-for="(message, index) in messages"
-            :key="index"
-            :class="message.sender"
+      <v-row justify="center">
+        <v-col cols="12" md="12" lg="12" xl="12">
+          <v-alert
+            v-model="showAlert"
+            type="error"
+            closable
+            transition="scale-transition"
           >
-            <v-chip
-              :color="message.sender === 'assistant' ? 'success' : 'indigo'"
-              class="ma-2 message-chip full-width rounded-lg"
-            >
-              <template v-slot:prepend v-if="message.sender === 'assistant'">
-                <span class="mr-1">🤖💬&NonBreakingSpace;</span>
-              </template>
-              <span class="message-text">{{ message.text }}</span>
-            </v-chip>
-          </div>
-        </div>
-      </v-card>
+            {{ t('error.unknown') }} {{ errorMessage }}
+          </v-alert>
 
-      <!-- Input Section -->
-      <v-card class="pa-4 mt-4 rounded-xl" outlined>
-        <v-row>
-          <v-col cols="10">
-            <v-textarea
-              v-model="userMessage"
-              :label="t('user.case.description')"
-              outlined
-              rounded="large"
-              rows="3"
-              auto-grow
-              hide-details
-            ></v-textarea>
-          </v-col>
-          <v-col cols="2">
-            <v-btn color="primary" @click="sendMessage">Send</v-btn>
-          </v-col>
-        </v-row>
-      </v-card>
+          <!-- Header Section -->
+          <v-card class="pa-4 rounded-xl" outlined>
+            <v-card-title>Lex 🇨🇭 Bot</v-card-title>
+            <v-card-subtitle>{{ t('bot.welcome') }}</v-card-subtitle>
+            <v-card-text>
+              <p class="text-body-1 mb-6">{{ t('bot.role') }}</p>
+              <p class="text-body-1 mb-6">{{ t('bot.purpose') }}</p>
+              <p class="text-body-1">
+                <strong>{{ t('bot.start') }}</strong>
+              </p>
+            </v-card-text>
+          </v-card>
+
+          <!-- Chat Messages Section -->
+          <v-card class="pa-4 mt-4 rounded-xl" outlined v-if="messages.length">
+            <div class="messages">
+              <div
+                v-for="(message, index) in messages"
+                :key="index"
+                :class="message.sender"
+              >
+                <v-chip
+                  :color="message.sender === 'assistant' ? 'success' : 'indigo'"
+                  class="ma-2 message-chip full-width rounded-lg"
+                >
+                  <template
+                    v-slot:prepend
+                    v-if="message.sender === 'assistant'"
+                  >
+                    <span class="mr-1"><v-icon>mdi-robot</v-icon>💬</span>
+                  </template>
+                  <span class="message-text">{{ message.text }}</span>
+                </v-chip>
+              </div>
+            </div>
+          </v-card>
+
+          <!-- Input Section -->
+          <v-card class="pa-4 mt-4 rounded-xl" outlined>
+            <v-row>
+              <v-col cols="9">
+                <v-textarea
+                  v-model="userMessage"
+                  :label="t('user.case.description')"
+                  outlined
+                  rounded="large"
+                  rows="3"
+                  auto-grow
+                  hide-details
+                ></v-textarea>
+              </v-col>
+              <v-col cols="3">
+                <v-btn color="primary" @click="sendMessage">{{
+                  t('send')
+                }}</v-btn>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-container>
   </v-app>
 </template>
@@ -111,10 +120,21 @@ function sendMessage() {
 }
 
 async function loadBotResponse() {
+  const modelCode = 'mistral-large-2407' // "mistral-large-2407", "open-mistral-nemo-2407", "open-mistral-7b", "mistral-tiny"
   try {
     const llmResponse = await client.chat.complete({
-      model: 'mistral-tiny',
-      messages: [{ role: 'user', content: 'What is the best French cheese?' }],
+      model: modelCode,
+      messages: [
+        {
+          role: 'user',
+          content:
+            t('prompt.suggestions.intro') +
+            '[user]' +
+            userMessage.value +
+            '[/user]' +
+            t('prompt.suggestions.instruct'),
+        },
+      ],
     })
     const message =
       (llmResponse.choices && llmResponse.choices[0].message.content) || ''

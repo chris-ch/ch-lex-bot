@@ -9,6 +9,7 @@ import router from './router'
 
 import i18n from './i18n'
 import '@mdi/font/css/materialdesignicons.css'
+import { aliases, mdi } from 'vuetify/iconsets/mdi'
 import { createVuetify } from 'vuetify'
 import 'vuetify/styles'
 import * as components from 'vuetify/components'
@@ -62,6 +63,13 @@ const vuetify = createVuetify({
     defaultTheme: 'revautLightTheme',
     themes: {
       revautLightTheme,
+    },
+  },
+  icons: {
+    defaultSet: 'mdi',
+    aliases,
+    sets: {
+      mdi,
     },
   },
 })

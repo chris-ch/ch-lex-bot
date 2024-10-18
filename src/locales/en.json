@@ -1,9 +1,13 @@
 {
-  "bot.welcome": "Welcome to your intelligent assistant for legal research."
-  ,"bot.role": "I am here to guide you in describing your case and to help you find relevant legal documents in our vast database. I will ask you targeted questions to understand the essential details of your case. Using this information, I will search our comprehensive library of case law, statutes, and legal commentary to provide you with the most relevant resources."
-  ,"bot.purpose": "My goal is to simplify your legal research process, allowing you to focus on analyzing and applying this information to your specific case."
-  ,"bot.start": "Let's begin by describing your legal situation!"
-  ,"mistral.key": "Please enter your Mistral API key before proceeding:"
-  ,"user.case.description": "Please briefly describe your legal situation..."
-  ,"error.unknown": "An unkown error occurred: "
-  }
+  "bot.welcome": "Welcome to your intelligent assistant for legal research.",
+  "bot.role": "I am here to guide you in describing your case and to help you find relevant legal documents in our vast database. I will ask you targeted questions to understand the essential details of your case. Using this information, I will search our comprehensive library of case law, statutes, and legal commentary to provide you with the most relevant resources.",
+  "bot.purpose": "My goal is to simplify your legal research process, allowing you to focus on analyzing and applying this information to your specific case.",
+  "bot.start": "Let's begin by describing your legal situation!",
+  "mistral.key": "Please enter your Mistral API key before proceeding:",
+  "user.case.description": "Please briefly describe your legal situation...",
+  "error.unknown": "An unkown error occurred: ",
+  "logout": "Log off",
+  "send": "Send",
+  "prompt.suggestions.intro": "As a legal assistant specializing in Swiss law, your role is to help the user draft a description of their legal situation. The user's description follows between tags [user] and [/user]:\n",
+  "prompt.suggestions.instruct": "Analyze the  description above provided by the user and briefly rephrase the key elements of the situation, hinting the user towards improvements, but do not answer to the user's question. For example if necessary, suggest additional information in a general and hypothetical manner, using the conditional tense. Check if the general context, directly involved parties, timeline, and general location in Switzerland are mentioned. In particular the locality and Canton are particularly useful information. Avoid requesting for too detailed information, like exact address or exact time.\nImportant instructions:\n- Do not ask any direct questions.\n- Avoid specific legal advice.\n- Remain neutral and factual.\n- Focus on relevant aspects of the case.\n- Formulate your response concisely and informally."
+}

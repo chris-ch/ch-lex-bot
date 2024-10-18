@@ -1,9 +1,13 @@
 {
-  "bot.welcome": "Bienvenue sur votre assistant intelligent pour la recherche juridique."
-  ,"bot.role": "Je suis là pour vous guider dans la description de votre affaire et vous aider à trouver les documents légaux pertinents dans notre vaste base de données. Je vous poserai des questions ciblées pour comprendre les détails essentiels de votre cas. En utilisant ces informations, je parcourrai notre bibliothèque complète de jurisprudence, de lois et de commentaires juridiques pour vous fournir les ressources les plus pertinentes."
-  ,"bot.purpose": "Mon objectif est de simplifier votre processus de recherche juridique, vous permettant ainsi de vous concentrer sur l'analyse et l'application de ces informations à votre affaire spécifique."
-  ,"bot.start": "Commençons par décrire votre situation juridique !"
-  ,"mistral.key": "Veuillez renseigner votre clé d'API Mistral avant de poursuivre :"
-  ,"user.case.description": "Veuillez décrire brièvement votre situation ou question juridique..."
-  ,"error.unknown": "An unkown error occurred: "
+  "bot.welcome": "Bienvenue sur votre assistant intelligent pour la recherche juridique.",
+  "bot.role": "Je suis là pour vous guider dans la description de votre affaire et vous aider à trouver les documents légaux pertinents dans notre vaste base de données. Je vous poserai des questions ciblées pour comprendre les détails essentiels de votre cas. En utilisant ces informations, je parcourrai notre bibliothèque complète de jurisprudence, de lois et de commentaires juridiques pour vous fournir les ressources les plus pertinentes.",
+  "bot.purpose": "Mon objectif est de simplifier votre processus de recherche juridique, vous permettant ainsi de vous concentrer sur l'analyse et l'application de ces informations à votre affaire spécifique.",
+  "bot.start": "Commençons par décrire votre situation juridique !",
+  "mistral.key": "Veuillez renseigner votre clé d'API Mistral avant de poursuivre :",
+  "user.case.description": "Veuillez décrire brièvement votre situation ou question juridique...",
+  "error.unknown": "An unkown error occurred: ",
+  "logout": "Déconnexion",
+  "send": "Envoyer",
+  "prompt.suggestions.intro": "En tant qu'assistant juridique spécialisé en droit suisse, votre rôle est d'aider l'utilisateur à rédiger une description de sa situation juridique. La description de l'utilisateur suit, entre les tags [user] et [/user] :\n",
+  "prompt.suggestions.instruct": "Analysez la description ci-dessus fournie par l'utilisateur et reformulez brièvement les éléments clés de la situation, en orientant l'utilisateur vers des améliorations, mais sans répondre à sa question. Par exemple, si nécessaire, suggérez des informations supplémentaires de manière générale et hypothétique, en utilisant le conditionnel. Vérifiez si le contexte général, les parties directement impliquées, la chronologie et la localisation générale en Suisse sont mentionnés. En particulier, la localité et le canton sont des informations particulièrement utiles. Évitez de demander des informations trop détaillées, comme une adresse exacte ou une heure précise.\nInstructions importantes :\n- Ne posez pas de questions directes.\n- Évitez les conseils juridiques spécifiques.\n- Restez neutre et factuel.\n- Concentrez-vous sur les aspects pertinents du cas.\n- Formulez votre réponse de manière concise et informelle."
 }
