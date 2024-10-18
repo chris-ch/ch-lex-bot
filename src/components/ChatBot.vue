@@ -26,7 +26,11 @@
       <!-- Chat Messages Section -->
       <v-card class="pa-4 mt-4 rounded-xl" outlined v-if="messages.length">
         <div class="messages">
-          <div v-for="(message, index) in messages" :key="index" :class="message.sender">
+          <div
+            v-for="(message, index) in messages"
+            :key="index"
+            :class="message.sender"
+          >
             <v-chip
               :color="message.sender === 'bot' ? 'success' : 'indigo'"
               class="ma-2 message-chip full-width rounded-lg"
@@ -62,83 +66,83 @@
     </v-container>
   </v-app>
 </template>
-  
-<script setup>
-  import { ref, watch } from 'vue';
-  import { Mistral } from '@mistralai/mistralai';
 
-  const userMessage = ref('');
-  const messages = ref([]);
-  const showAlert = ref(false);
-  const errorMessage = ref('');
-  const props = defineProps({
-    showUnknownError: {
-      type: String,
-      default: ''
-    }
-  });
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+import { Mistral } from '@mistralai/mistralai'
 
-  watch(() => props.showUnknownError, (newValue) => {
-    errorMessage.value = newValue;
-    showAlert.value = !!newValue;
-  });
+const userMessage = ref('')
+const messages = ref([])
+const showAlert = ref(false)
+const errorMessage = ref('')
+const props = defineProps({
+  showUnknownError: {
+    type: String,
+    default: '',
+  },
+})
 
-  const mistralAPIKey = JSON.parse(localStorage.getItem('userInfo')).mistralAPIKey
+watch(
+  () => props.showUnknownError,
+  newValue => {
+    errorMessage.value = newValue
+    showAlert.value = !!newValue
+  },
+)
 
-  const client = new Mistral({apiKey: mistralAPIKey});
+const mistralAPIKey = JSON.parse(localStorage.getItem('userInfo')).mistralAPIKey
 
-  function sendMessage() {
-    if (userMessage.value.trim()) {
-      messages.value.push({ sender: 'user', text: userMessage.value });
-      loadBotResponse();
-      userMessage.value = '';
-    }
+const client = new Mistral({ apiKey: mistralAPIKey })
+
+function sendMessage() {
+  if (userMessage.value.trim()) {
+    messages.value.push({ sender: 'user', text: userMessage.value })
+    loadBotResponse()
+    userMessage.value = ''
   }
+}
 
-  async function loadBotResponse() {
-    try {
-      const llmResponse = await client.chat.complete({
-        model: 'mistral-tiny',
-        messages: [{role: 'user', content: 'What is the best French cheese?'}],
-      });
-      messages.value.push({ sender: 'bot', text: llmResponse });
-    } catch (error) {
-      // Check if the error is a 401 Unauthorized error
-      if (error.name === 'SDKError') {
-        // Extract status code
-        const statusMatch = error.message.match(/Status (\d+)/);
-        if (statusMatch) {
-          const errorStatus = parseInt(statusMatch[1], 10);
-          if (errorStatus === 401) {
-            const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
-            console.log("resetting userinfo field mistralAPIKey: ", userInfo);
-            userInfo['mistralAPIKey'] = null;
-            localStorage.setItem('userInfo', JSON.stringify(userInfo));
-            console.log("new user info value: ", userInfo);
-            // TODO App page needs to refresh
-
-          } else {
-            errorMessage.value = errorStatus;
-            showAlert.value = true;
-            console.error('an error occurred:', error);
-          }
+async function loadBotResponse() {
+  try {
+    const llmResponse = await client.chat.complete({
+      model: 'mistral-tiny',
+      messages: [{ role: 'user', content: 'What is the best French cheese?' }],
+    })
+    messages.value.push({ sender: 'bot', text: llmResponse })
+  } catch (error) {
+    // Check if the error is a 401 Unauthorized error
+    if (error.name === 'SDKError') {
+      // Extract status code
+      const statusMatch = error.message.match(/Status (\d+)/)
+      if (statusMatch) {
+        const errorStatus = parseInt(statusMatch[1], 10)
+        if (errorStatus === 401) {
+          const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {}
+          console.log('resetting userinfo field mistralAPIKey: ', userInfo)
+          userInfo['mistralAPIKey'] = null
+          localStorage.setItem('userInfo', JSON.stringify(userInfo))
+          console.log('new user info value: ', userInfo)
+          // TODO App page needs to refresh
         } else {
-          errorMessage.value = error;
+          errorMessage.value = errorStatus
           showAlert.value = true
-          console.error('an error occurred:', error);
+          console.error('an error occurred:', error)
         }
       } else {
-        errorMessage.value = error;
+        errorMessage.value = error
         showAlert.value = true
-        console.error('an error occurred:', error);
+        console.error('an error occurred:', error)
       }
+    } else {
+      errorMessage.value = error
+      showAlert.value = true
+      console.error('an error occurred:', error)
     }
   }
-
+}
 </script>
-  
-<style scoped>
 
+<style scoped>
 .full-width {
   width: 100%;
   max-width: 100%;

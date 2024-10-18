@@ -4,31 +4,20 @@
   </div>
 </template>
 
-<script setup>
-  import { onMounted } from "vue";
-  import { register } from "@teamhanko/hanko-elements";
+<script setup lang="ts">
+import { useUserStore } from '@/stores/userStore'
 
-  // Define the event emitter for onSessionCreated
-  const emit = defineEmits(['onSessionCreated']);
+const userStore = useUserStore()
 
-  const hankoApi = process.env.VUE_APP_HANKO_API_URL;
+// Event handler function for when a session is created
+const onAuthenticated = (event: CustomEvent<{ jwt: string }>) => {
+  console.log('authentication succeeded:', event)
+  const userInfo = {
+    authToken: event.detail.jwt,
+    mistralAPIKey: undefined,
+  }
 
-  // Event handler function for when a session is created
-  const onAuthenticated = (event) => {
-    console.log("autentication succeeded:", event);
-    const userInfo = {
-      authToken: event.detail.jwt,
-      mistralAPIKey: undefined
-    };
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    emit('onSessionCreated', event.detail);
-  };
-
-  onMounted(() => {
-    if (hankoApi) {
-      register(hankoApi).catch((error) => {
-        console.error("error during Hanko API registration:", error);
-      });
-    }
-  });
+  userStore.setUserInfo(userInfo)
+  console.log('stored user token: ' + userInfo.authToken)
+}
 </script>
