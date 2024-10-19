@@ -30,3 +30,5 @@ coverage
 *.tsbuildinfo
 .certs
 node_modules
+.envrc
+
