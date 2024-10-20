@@ -1,79 +1,86 @@
 <template>
-  <v-app>
-    <v-container>
-      <v-row justify="center">
-        <v-col cols="12" md="12" lg="12" xl="12">
-          <v-alert
-            v-model="showAlert"
-            type="error"
-            closable
-            transition="scale-transition"
+  <v-row justify="center">
+    <v-col cols="12" md="12">
+      <v-alert
+        v-model="showAlert"
+        type="error"
+        closable
+        transition="scale-transition"
+      >
+        {{ t('error.unknown') }} {{ errorMessage }}
+      </v-alert>
+    </v-col>
+  </v-row>
+
+  <!-- Header Section -->
+  <v-row justify="center">
+    <v-col cols="12" md="8">
+      <v-card class="rounded-xl" outlined>
+        <v-card-title>Lex 🇨🇭 Bot</v-card-title>
+        <v-card-subtitle>{{ t('bot.welcome') }}</v-card-subtitle>
+        <v-card-text>
+          <p class="text-body-1 mb-6">{{ t('bot.role') }}</p>
+          <p class="text-body-1 mb-6">{{ t('bot.purpose') }}</p>
+          <p class="text-body-1">
+            <strong>{{ t('bot.start') }}</strong>
+          </p>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
+
+  <!-- Chat Messages Section -->
+
+  <v-row justify="center">
+    <v-col cols="12" md="8">
+      <v-card class="rounded-xl" outlined v-if="messages.length">
+        <div class="messages">
+          <div
+            v-for="(message, index) in messages"
+            :key="index"
+            :class="message.sender"
           >
-            {{ t('error.unknown') }} {{ errorMessage }}
-          </v-alert>
+            <v-chip
+              :color="message.sender === 'assistant' ? 'success' : 'indigo'"
+              class="ma-2 message-chip full-width rounded-lg"
+            >
+              <template v-slot:prepend v-if="message.sender === 'assistant'">
+                <span class="mr-1"><v-icon>mdi-robot</v-icon>💬</span>
+              </template>
+              <span class="message-text">{{ message.text }}</span>
+            </v-chip>
+          </div>
+        </div>
+      </v-card>
+    </v-col>
+  </v-row>
 
-          <!-- Header Section -->
-          <v-card class="pa-4 rounded-xl" outlined>
-            <v-card-title>Lex 🇨🇭 Bot</v-card-title>
-            <v-card-subtitle>{{ t('bot.welcome') }}</v-card-subtitle>
-            <v-card-text>
-              <p class="text-body-1 mb-6">{{ t('bot.role') }}</p>
-              <p class="text-body-1 mb-6">{{ t('bot.purpose') }}</p>
-              <p class="text-body-1">
-                <strong>{{ t('bot.start') }}</strong>
-              </p>
-            </v-card-text>
-          </v-card>
+  <!-- Input Section -->
 
-          <!-- Chat Messages Section -->
-          <v-card class="pa-4 mt-4 rounded-xl" outlined v-if="messages.length">
-            <div class="messages">
-              <div
-                v-for="(message, index) in messages"
-                :key="index"
-                :class="message.sender"
-              >
-                <v-chip
-                  :color="message.sender === 'assistant' ? 'success' : 'indigo'"
-                  class="ma-2 message-chip full-width rounded-lg"
-                >
-                  <template
-                    v-slot:prepend
-                    v-if="message.sender === 'assistant'"
-                  >
-                    <span class="mr-1"><v-icon>mdi-robot</v-icon>💬</span>
-                  </template>
-                  <span class="message-text">{{ message.text }}</span>
-                </v-chip>
-              </div>
-            </div>
-          </v-card>
-
-          <!-- Input Section -->
-          <v-card class="pa-4 mt-4 rounded-xl" outlined>
-            <v-row>
-              <v-col cols="9">
-                <v-textarea
-                  v-model="userMessage"
-                  :label="t('user.case.description')"
-                  outlined
-                  rounded="large"
-                  rows="3"
-                  auto-grow
-                  hide-details
-                ></v-textarea>
-              </v-col>
-              <v-col cols="3">
-                <v-btn color="primary" @click="sendMessage">{{
-                  t('send')
-                }}</v-btn>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-app>
+  <v-row justify="center">
+    <v-col cols="12" md="8">
+      <v-card class="rounded-xl" outlined>
+        <v-row>
+          <v-col>
+            <v-textarea
+              v-model="userMessage"
+              :label="t('user.case.description')"
+              outlined
+              rounded="large"
+              rows="5"
+              auto-grow
+              hide-details
+            ></v-textarea>
+          </v-col>
+        </v-row>
+        <v-row class="pt-4 pb-4 pr-4">
+          <v-col class="d-flex justify-end">
+            <v-btn color="primary" @click="sendMessage">{{ t('send') }}</v-btn>
+          </v-col>
+        </v-row>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script setup lang="ts">
