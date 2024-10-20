@@ -22,7 +22,9 @@
       </v-container>
     </v-main>
 
-    <v-footer app color="#BBBBBB" elevation="5"> Revault sàrl - 2024 </v-footer>
+    <v-footer app color="#BBBBBB" elevation="5" class="justify-end">
+      <div>Revault sàrl - 2024</div>
+    </v-footer>
   </v-app>
 </template>
 
