@@ -95,87 +95,114 @@ import { ref, watch } from 'vue'
 import { Mistral } from '@mistralai/mistralai'
 import { useUserStore } from '@/stores/userStore'
 import { useChatStore } from '@/stores/chatStore'
+import type { ModelCode } from '@/types/mistral'
 import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+import type { ChatCompletionResponse } from '@mistralai/mistralai/models/components'
 
+// Types
+interface Props {
+  showUnknownError: string
+}
+
+// Constants
+const MODEL_CODE: ModelCode = 'mistral-large-2407'
+const ERROR_CODES = {
+  UNAUTHORIZED: 401
+} as const
+
+// Composables
+const { t } = useI18n()
 const userStore = useUserStore()
 const chatStore = useChatStore()
 
+// Refs
 const userMessage = ref('')
 const showAlert = ref(false)
 const errorMessage = ref('')
-const props = defineProps({
-  showUnknownError: {
-    type: String,
-    default: '',
-  },
-})
 
+// Props
+const props = defineProps<Props>()
+
+// Initialize Mistral client
+const getMistralClient = () => new Mistral({ apiKey: userStore.mistralAPIKey })
+
+// Watchers
 watch(
   () => props.showUnknownError,
-  newValue => {
+  (newValue) => {
     errorMessage.value = newValue
-    showAlert.value = !!newValue
+    showAlert.value = Boolean(newValue)
   },
 )
 
-const client = new Mistral({ apiKey: userStore.mistralAPIKey })
+// Error handling
+const handleError = (error: unknown) => {
+  if (!(error instanceof Error)) {
+    console.error('Unknown error type:', error)
+    return
+  }
 
-function sendMessage() {
-  if (userMessage.value.trim()) {
-    chatStore.addMessage({ sender: 'user', text: userMessage.value })
-    loadBotResponse()
-    userMessage.value = ''
+  if (error.name === 'SDKError') {
+    const statusMatch = error.message.match(/Status (\d+)/)
+    if (!statusMatch) {
+      setError(error.message)
+      return
+    }
+
+    const errorStatus = parseInt(statusMatch[1], 10)
+    if (errorStatus === ERROR_CODES.UNAUTHORIZED) {
+      console.log('Resetting Mistral API key due to unauthorized access')
+      userStore.setMistralAPIKey('')
+      return
+    }
+
+    setError(`Error ${errorStatus}`)
+  } else {
+    setError(error.message)
   }
 }
 
+const setError = (message: string) => {
+  errorMessage.value = message
+  showAlert.value = true
+  console.error('An error occurred:', message)
+}
+
+// Message handling
+const buildPrompt = (userInput: string): string => {
+  return `${t('prompt.suggestions.intro')}[user]${userInput}[/user]${t('prompt.suggestions.instruct')}`
+}
+
+const processLLMResponse = (response: ChatCompletionResponse) => {
+  const message = response.choices?.[0]?.message?.content || ''
+  chatStore.addMessage({ sender: 'assistant', text: message })
+}
+
+// Main functions
+function sendMessage() {
+  const trimmedMessage = userMessage.value.trim()
+  if (!trimmedMessage) return
+
+  chatStore.addMessage({ sender: 'user', text: trimmedMessage })
+  loadBotResponse()
+  userMessage.value = ''
+}
+
 async function loadBotResponse() {
-  const modelCode = 'mistral-large-2407' // "mistral-large-2407", "open-mistral-nemo-2407", "open-mistral-7b", "mistral-tiny"
   try {
-    const llmResponse = await client.chat.complete({
-      model: modelCode,
+    const client = getMistralClient()
+    const llmResponse: ChatCompletionResponse = await client.chat.complete({
+      model: MODEL_CODE,
       messages: [
         {
           role: 'user',
-          content:
-            t('prompt.suggestions.intro') +
-            '[user]' +
-            userMessage.value +
-            '[/user]' +
-            t('prompt.suggestions.instruct'),
+          content: buildPrompt(userMessage.value),
         },
       ],
     })
-    const message =
-      (llmResponse.choices && llmResponse.choices[0].message.content) || ''
-    chatStore.addMessage({ sender: 'assistant', text: message })
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      // Check if the error is a 401 Unauthorized error
-      if (error.name === 'SDKError') {
-        // Extract status code
-        const statusMatch = error.message.match(/Status (\d+)/)
-        if (statusMatch) {
-          const errorStatus = parseInt(statusMatch[1], 10)
-          if (errorStatus === 401) {
-            console.log('resetting userinfo field mistralAPIKey')
-            userStore.setMistralAPIKey('')
-          } else {
-            errorMessage.value = '' + errorStatus
-            showAlert.value = true
-            console.error('an error occurred:', error)
-          }
-        } else {
-          errorMessage.value = error.message
-          showAlert.value = true
-          console.error('an error occurred:', error)
-        }
-      } else {
-        errorMessage.value = error.message
-        showAlert.value = true
-        console.error('an error occurred:', error)
-      }
-    }
+    processLLMResponse(llmResponse)
+  } catch (error) {
+    handleError(error)
   }
 }
 </script>
