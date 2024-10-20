@@ -1,6 +1,14 @@
-# vue-project
+# Lex Bot
 
-This template should help get you started developing with Vue 3 in Vite.
+## Development Setup
+
+SSL certificates
+
+```shell
+mkdir -p .certs
+openssl genpkey -algorithm RSA -out .certs/privatekey.pem
+openssl req -x509 -key .certs/privatekey.pem -out .certs/certificate.crt -days 365
+```
 
 ## Recommended IDE Setup
 

@@ -7,7 +7,6 @@
             alt="Company logo"
             src="./assets/logo-revault.svg"
             width="200"
-            class="company-logo"
           />
         </a>
       </v-toolbar-title>
@@ -15,10 +14,15 @@
       <LanguageSwitcher />
       <ProfileDropdown v-if="isAuthenticated()" />
     </v-app-bar>
+   
+  <v-main>
+    <v-container fluid>
+      <router-view  v-if="isAuthenticated()"/>
+      <HankoAuth v-else/>
+    </v-container>
+  </v-main>
 
-    <router-view />
-
-    <v-main v-if="!isAuthenticated()">
+    <!--v-main v-if="!isAuthenticated()">
       <v-container>
         <v-row justify="center">
           <v-col cols="auto">
@@ -26,7 +30,11 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-main>
+    </v-main-->
+
+  <v-footer app>
+    Revault sàrl - 2024
+  </v-footer>
   </v-app>
 </template>
 
