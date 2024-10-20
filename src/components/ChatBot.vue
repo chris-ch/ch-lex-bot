@@ -33,21 +33,28 @@
 
   <v-row justify="center">
     <v-col cols="12" md="8">
-      <v-card class="rounded-xl" outlined v-if="messages.length">
+      <v-card class="rounded-xl pa-4" outlined v-if="chatStore.messages.length">
         <div class="messages">
           <div
-            v-for="(message, index) in messages"
+            v-for="(message, index) in chatStore.messages"
             :key="index"
             :class="message.sender"
+            class="pa-4"
           >
             <v-chip
               :color="message.sender === 'assistant' ? 'success' : 'indigo'"
-              class="ma-2 message-chip full-width rounded-lg"
+              class="message-chip rounded-lg pa-4"
             >
-              <template v-slot:prepend v-if="message.sender === 'assistant'">
-                <span class="mr-1"><v-icon>mdi-robot</v-icon>💬</span>
+            <v-row>
+              <v-col cols="2">
+                <template v-if="message.sender === 'assistant'">
+                <span><v-icon>mdi-robot</v-icon>&nbsp;💬</span>
               </template>
+            </v-col>
+            <v-col cols="10">
               <span class="message-text">{{ message.text }}</span>
+            </v-col>
+            </v-row>
             </v-chip>
           </div>
         </div>
@@ -87,18 +94,14 @@
 import { ref, watch } from 'vue'
 import { Mistral } from '@mistralai/mistralai'
 import { useUserStore } from '@/stores/userStore'
+import { useChatStore } from '@/stores/chatStore'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 const userStore = useUserStore()
-
-interface Message {
-  sender: 'user' | 'assistant'
-  text: string
-}
+const chatStore = useChatStore()
 
 const userMessage = ref('')
-const messages = ref<Message[]>([])
 const showAlert = ref(false)
 const errorMessage = ref('')
 const props = defineProps({
@@ -120,7 +123,7 @@ const client = new Mistral({ apiKey: userStore.mistralAPIKey })
 
 function sendMessage() {
   if (userMessage.value.trim()) {
-    messages.value.push({ sender: 'user', text: userMessage.value })
+    chatStore.addMessage({ sender: 'user', text: userMessage.value })
     loadBotResponse()
     userMessage.value = ''
   }
@@ -145,7 +148,7 @@ async function loadBotResponse() {
     })
     const message =
       (llmResponse.choices && llmResponse.choices[0].message.content) || ''
-    messages.value.push({ sender: 'assistant', text: message })
+    chatStore.addMessage({ sender: 'assistant', text: message })
   } catch (error: unknown) {
     if (error instanceof Error) {
       // Check if the error is a 401 Unauthorized error
@@ -178,10 +181,6 @@ async function loadBotResponse() {
 </script>
 
 <style scoped>
-.full-width {
-  width: 100%;
-  max-width: 100%;
-}
 
 .bot {
   text-align: left;
