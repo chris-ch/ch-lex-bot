@@ -1,24 +1,44 @@
-# vue-project
+# ⚖️ Lex Bot 🇨🇭
 
-This template should help get you started developing with Vue 3 in Vite.
+## Requests examples
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+```
+J'ai reçu un notification de résiliation de mon bail et je souhaite savoir
+si je peux le contester car je ne souhaite pas quitter mon appartement.
+Mon bail mentionne qu'il se reconduit automatiquement d'année en année et
+que l'échéance est au 15 décembre avec 3 mois de préavis.
+La notification ne mentionne pas de raison particulière pour la résiliation,
+et je l'ai reçue le 20 septembre 2024 pour le 15 décembre prochain.
+J'habite dans le canton de Vaud.
+```
 
 ## Project Setup
+
+### Pre-requisites
+
+Make sure nodejs is installed:
+
+```sh
+node -v
+```
 
 ```sh
 pnpm install
 ```
+
+Installing SSL self-signed certificates:
+
+```sh
+openssl req -x509 -out .certs/localhost.crt -keyout .certs/localhost.key -newkey rsa:2048 -nodes -sha256 -days 365 -subj "/CN=localhost"
+sudo cp .certs/localhost.crt /usr/local/share/ca-certificates/.
+sudo update-ca-certificates
+```
+
+Then in [brave](brave://settings/certificates):
+
+- Under Authorities, click Import.
+- Select the .crt file you created (e.g., .certs/localhost.crt).
+- Choose to Trust this certificate for identifying websites.
 
 ### Compile and Hot-Reload for Development
 

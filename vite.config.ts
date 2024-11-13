@@ -25,8 +25,8 @@ export default defineConfig({
   },
   server: {
     https: {
-      key: fs.readFileSync(path.resolve(__dirname, '.certs/server-key.pem')),
-      cert: fs.readFileSync(path.resolve(__dirname, '.certs/server-cert.pem')),
+      key: fs.readFileSync(path.resolve(__dirname, '.certs/localhost.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, '.certs/localhost.crt')),
     },
     host: process.env.VITE_HOST || 'localhost',
     port: Number(process.env.VITE_PORT) || 8443,
