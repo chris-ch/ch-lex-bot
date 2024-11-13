@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex justify-center">
     <hanko-auth @onSessionCreated="onAuthenticated"></hanko-auth>
   </div>
 </template>
