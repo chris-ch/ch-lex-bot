@@ -42,14 +42,12 @@ import ProfileDropdown from './components/ProfileDropdown.vue'
 
 const { t } = useI18n()
 const userStore = useUserStore()
-const { authToken, mistralAPIKey } = storeToRefs(userStore)
-console.log("retrieved token from store: '" + authToken.value + "'")
+const { mistralAPIKey } = storeToRefs(userStore)
 
 console.info('using Mistral API key: ' + mistralAPIKey)
 console.log(t('send'))
 
 const isAuthenticated = (): boolean => {
-  console.log('checking token: "' + authToken.value + '""')
-  return !!authToken.value && authToken.value.length > 0
+  return !!userStore.userId
 }
 </script>

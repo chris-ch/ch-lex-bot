@@ -10,8 +10,7 @@ const newMistralAPIKey = ref('')
 import ChatBot from '../components/ChatBot.vue'
 
 const userStore = useUserStore()
-const { authToken, mistralAPIKey } = storeToRefs(userStore)
-console.log("retrieved token from store: '" + authToken.value + "'")
+const { mistralAPIKey } = storeToRefs(userStore)
 
 console.info('using Mistral API key: ' + mistralAPIKey)
 

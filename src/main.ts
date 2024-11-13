@@ -94,4 +94,11 @@ app.use(i18n)
 app.mount('#app')
 
 const userStore = useUserStore()
-userStore.init()
+const userId = localStorage.getItem('userId')
+if (userId) {
+  userStore.init(userId)
+} else {
+  console.log(
+    'No user ID found; userStore not initialized with specific user data.',
+  )
+}

@@ -41,6 +41,6 @@ const handleMenuClick = (item: string) => {
 const logout = async () => {
   console.log('logging out')
   // Clear the user info from the Pinia store
-  userStore.clearAuthToken()
+  userStore.logout()
 }
 </script>
