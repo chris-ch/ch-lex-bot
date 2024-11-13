@@ -23,7 +23,11 @@
     </v-main>
 
     <v-footer app color="#BBBBBB" elevation="5" class="justify-end">
-      <div>Revault sàrl - 2024</div>
+      <div>
+        <span style="color: #e03e29">re</span>&nbsp;<span style="color: #d2d2d2"
+          >|</span
+        >&nbsp;<span style="color: #505050">vault sàrl - 2024</span>
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -33,7 +37,7 @@ import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import LanguageSwitcher from './components/LanguageSwitcher.vue'
-//import HankoAuth from './components/HankoAuth.vue'
+import HankoAuth from './components/HankoAuth.vue'
 import ProfileDropdown from './components/ProfileDropdown.vue'
 
 const { t } = useI18n()

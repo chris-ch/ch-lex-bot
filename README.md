@@ -16,7 +16,7 @@ J'habite dans le canton de Vaud.
 
 ### Pre-requisites
 
-Make sure nodejs is installed:
+**Make sure nodejs is installed**
 
 ```sh
 node -v
@@ -26,7 +26,7 @@ node -v
 pnpm install
 ```
 
-Installing SSL self-signed certificates:
+**Installing SSL self-signed certificates**
 
 ```sh
 openssl req -x509 -out .certs/localhost.crt -keyout .certs/localhost.key -newkey rsa:2048 -nodes -sha256 -days 365 -subj "/CN=localhost"
@@ -39,6 +39,10 @@ Then in [brave](brave://settings/certificates):
 - Under Authorities, click Import.
 - Select the .crt file you created (e.g., .certs/localhost.crt).
 - Choose to Trust this certificate for identifying websites.
+
+**Create an account on [Hanko](https://hanko.io/) for handling authentication**
+
+**Register at [Mistral](https://mistra.ai) and create an API Key**
 
 ### Compile and Hot-Reload for Development
 
