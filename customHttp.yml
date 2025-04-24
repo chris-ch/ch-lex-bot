@@ -1,9 +1,10 @@
-- pattern: '/*'
-  headers:
-    - key: Content-Security-Policy
-      value: |
-        default-src 'self';
-        script-src 'self' https://cdn.hanko.io 'unsafe-eval' 'wasm-unsafe-eval';
-        connect-src 'self' https://8bf033a6-ec4f-4c0d-b037-ce9b6c589c73.hanko.io;
-        style-src 'self' 'unsafe-inline';
-        frame-src 'self';
+customHeaders: #  ← **mandatory root key**
+  - pattern: '/**' #  glob or path
+    headers:
+      - key: Content-Security-Policy
+        value: >
+          default-src 'self';
+          script-src 'self' https://cdn.hanko.io 'unsafe-eval' 'wasm-unsafe-eval';
+          connect-src 'self' https://*.hanko.io;
+          style-src 'self' 'unsafe-inline';
+          frame-src 'self';
