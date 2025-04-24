@@ -45,16 +45,16 @@
               :color="message.sender === 'assistant' ? 'success' : 'indigo'"
               class="message-chip rounded-lg pa-4"
             >
-            <v-row>
-              <v-col cols="2">
-                <template v-if="message.sender === 'assistant'">
-                <span><v-icon>mdi-robot</v-icon>&nbsp;💬</span>
-              </template>
-            </v-col>
-            <v-col cols="10">
-              <span class="message-text">{{ message.text }}</span>
-            </v-col>
-            </v-row>
+              <v-row>
+                <v-col cols="2">
+                  <template v-if="message.sender === 'assistant'">
+                    <span><v-icon>mdi-robot</v-icon>&nbsp;💬</span>
+                  </template>
+                </v-col>
+                <v-col cols="10">
+                  <span class="message-text">{{ message.text }}</span>
+                </v-col>
+              </v-row>
             </v-chip>
           </div>
         </div>
@@ -107,7 +107,7 @@ interface Props {
 // Constants
 const MODEL_CODE: ModelCode = 'mistral-large-2407'
 const ERROR_CODES = {
-  UNAUTHORIZED: 401
+  UNAUTHORIZED: 401,
 } as const
 
 // Composables
@@ -129,7 +129,7 @@ const getMistralClient = () => new Mistral({ apiKey: userStore.mistralAPIKey })
 // Watchers
 watch(
   () => props.showUnknownError,
-  (newValue) => {
+  newValue => {
     errorMessage.value = newValue
     showAlert.value = Boolean(newValue)
   },
@@ -169,9 +169,13 @@ const setError = (message: string) => {
 }
 
 // Message handling
-const buildPrompt = (userInput: string): string => {
+const buildRecapPrompt = (userInput: string): string => {
   return `${t('prompt.suggestions.intro')}[user]${userInput}[/user]${t('prompt.suggestions.instruct')}`
 }
+
+//const buildKeywordsPrompt = (userInput: string): string => {
+//  return `${t('prompt.keywords.intro')}[user]${userInput}[/user]${t('prompt.keywords.instruct')}`
+//}
 
 const processLLMResponse = (response: ChatCompletionResponse) => {
   const message = response.choices?.[0]?.message?.content || ''
@@ -196,7 +200,7 @@ async function loadBotResponse() {
       messages: [
         {
           role: 'user',
-          content: buildPrompt(userMessage.value),
+          content: buildRecapPrompt(userMessage.value),
         },
       ],
     })
@@ -208,7 +212,6 @@ async function loadBotResponse() {
 </script>
 
 <style scoped>
-
 .bot {
   text-align: left;
 }

@@ -1,5 +1,5 @@
 Ordered:
-□ make Mistral key user-dependent (Critical)
+✅ make Mistral key user-dependent (Critical)
 □ complete chat workflow (Critical)
 ✅ keep messages in session (Major)
 □ add button for resetting chat (Major)

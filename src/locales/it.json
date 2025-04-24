@@ -8,7 +8,9 @@
   "error.unknown": "An unkown error occurred: ",
   "logout": "Uscire",
   "send": "Inviare",
-  "prompt.suggestions.intro": "Come assistente legale specializzato in diritto svizzero, il Suo ruolo è aiutare l'utente a redigere una descrizione della sua situazione legale. La descrizione dell'utente segue tra i tag [user] e [/user] :\n",
+  "prompt.suggestions.intro": "Come assistente legale specializzato in diritto svizzero, il tuo ruolo è aiutare l'utente a redigere una descrizione della sua situazione legale. La descrizione dell'utente segue tra i tag [user] e [/user] :\n",
   "prompt.suggestions.instruct": "Analizza la descrizione sopra fornita dall'utente e riformula brevemente gli elementi chiave della situazione, indirizzando l'utente verso miglioramenti, ma senza rispondere alla sua domanda. Ad esempio, se necessario, suggerisci informazioni aggiuntive in modo generale e ipotetico, usando il condizionale. Verifica se sono menzionati il contesto generale, le parti direttamente coinvolte, la cronologia e la posizione generale in Svizzera. In particolare, la località e il Cantone sono informazioni particolarmente utili. Evita di richiedere informazioni troppo dettagliate, come l'indirizzo esatto o l'ora precisa.\nIstruzioni importanti:\n- Non fare domande dirette.\n- Evita consigli legali specifici.\n- Rimani neutrale e fattuale.\n- Concentrati sugli aspetti rilevanti del caso.\n- Formula la tua risposta in modo conciso e informale.",
-  "user.input.mistral.key": "Please enter a valid Mistral API Key..."
+  "prompt.keywords.intro": "Come assistente legale specializzato in diritto svizzero, il tuo ruolo è aiutare l'utente a redigere una descrizione della sua situazione legale. La descrizione dell'utente segue tra i tag [user] e [/user] :\n",
+  "prompt.keywords.instruct": "Analizza la descrizione sopra fornita dall'utente e fornisci un elenco di parole chiave molto specifiche relative all'argomento, adatte per effettuare una ricerca giuridica pertinente nei testi della giurisdizione interessata. Limitati a elencare le parole chiave sotto forma di stringa separata da virgole, senza fornire contesto.",
+  "user.input.mistral.key": "Si prega di inserire una chiave API Mistral valida..."
 }

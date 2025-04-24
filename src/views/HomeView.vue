@@ -35,7 +35,7 @@ const setMistralAPIKey = () => {
   <!-- Chat Bot -->
   <v-row justify="center" v-if="mistralAPIKey">
     <v-col cols="12">
-      <ChatBot />
+      <ChatBot :showUnknownError="'true'" />
     </v-col>
   </v-row>
 

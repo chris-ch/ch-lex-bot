@@ -1,5 +1,14 @@
 # ⚖️ Lex Bot 🇨🇭
 
+## Prompts ideas
+```
+Voici un cas reçu pour un avis juridique:
+
+[...]
+
+Donne une liste de mots-clés très spécifiques et techniques, appropriés pour effectuer une recherche juridique pertinente dans les textes de la juridiction concernée. Limite-toi à énumérer les mots-clés sous forme de chaîne de caractères séparés par des virgules, sans donner de contexte.
+```
+
 ## Requests examples
 
 ```
@@ -41,6 +50,7 @@ Then in [brave](brave://settings/certificates):
 - Choose to Trust this certificate for identifying websites.
 
 **Create an account on [Hanko](https://hanko.io/) for handling authentication**
+Set up Hanko and the environment variable _VITE_HANKO_API_URL_
 
 **Register at [Mistral](https://mistra.ai) and create an API Key**
 
