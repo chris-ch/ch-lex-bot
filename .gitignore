@@ -32,3 +32,8 @@ coverage
 node_modules
 .envrc
 
+
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*
