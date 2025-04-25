@@ -3,7 +3,7 @@ import * as fs from 'fs';
 // Get the HANKO_API_URL from environment variable
 const hankoApiUrl = process.env.HANKO_API_URL || '';
 
-// Generate the CSP content
+// Generate the CSP contentpnpm add aws-amplify @aws-amplify/ui-vue
 const cspContent = `default-src 'self'; script-src 'self' 'unsafe-eval' ${hankoApiUrl}; style-src 'self' 'unsafe-inline'; style-src-elem 'self' 'unsafe-inline'; connect-src 'self' ${hankoApiUrl}; frame-src 'self' ${hankoApiUrl};`;
 
 // Create the headers file that Amplify will use
