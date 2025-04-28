@@ -98,6 +98,7 @@ import { useChatStore } from '@/stores/chatStore'
 import type { ModelCode } from '@/types/mistral'
 import { useI18n } from 'vue-i18n'
 import type { ChatCompletionResponse } from '@mistralai/mistralai/models/components'
+import type { ContentChunk } from '@mistralai/mistralai/models/components'
 
 // Types
 interface Props {
@@ -177,9 +178,30 @@ const buildRecapPrompt = (userInput: string): string => {
 //  return `${t('prompt.keywords.intro')}[user]${userInput}[/user]${t('prompt.keywords.instruct')}`
 //}
 
-const processLLMResponse = (response: ChatCompletionResponse) => {
-  const message = response.choices?.[0]?.message?.content || ''
-  chatStore.addMessage({ sender: 'assistant', text: message })
+function chunksToPlainText(
+  chunks: string | ContentChunk[] | undefined,
+): string {
+  if (!chunks) return ''
+
+  if (typeof chunks === 'string') return chunks // nothing to unwrap
+
+  return chunks
+    .map(chunk => {
+      if (chunk.type === 'text') {
+        return chunk.text // ✅ safe: TextChunk
+      }
+      if (chunk.type === 'image_url') {
+        return `[image: ${chunk.imageUrl ?? '…'}]` // or '' if you prefer
+      }
+      return ''
+    })
+    .join('')
+}
+
+function processLLMResponse(response: ChatCompletionResponse) {
+  const raw = response.choices?.[0]?.message?.content
+  const text = chunksToPlainText(raw ?? undefined)
+  chatStore.addMessage({ sender: 'assistant', text })
 }
 
 // Main functions
