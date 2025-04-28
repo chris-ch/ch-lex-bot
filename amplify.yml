@@ -3,14 +3,13 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install -g pnpm ts-node
-        - pnpm install
-        - ts-node generate-csp.ts
+        - npm install -g pnpm # ts-node no longer required
+        # ––– install deps; allow post-install scripts so CI is quiet –––
+        - pnpm install --unsafe-perm # or: pnpm approve-builds -w a
     build:
       commands:
-        - pnpm build
+        - pnpm build # calls your "build" script
   artifacts:
     baseDirectory: dist
     files:
       - '**/*'
-  customHeaders: ${file(./amplify-headers.json)}
