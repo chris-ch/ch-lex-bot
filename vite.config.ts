@@ -10,16 +10,7 @@ export default defineConfig(({ command }) => {
   const isDev = command === 'serve' // 'serve' = vite dev, 'build' = vite build
 
   return {
-    plugins: [
-      vue({
-        template: {
-          compilerOptions: {
-            isCustomElement: tag => tag.startsWith('hanko-'),
-          },
-        },
-      }),
-      vueJsx(),
-    ],
+    plugins: [vue(), vueJsx()],
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),

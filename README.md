@@ -49,9 +49,6 @@ Then in [brave](brave://settings/certificates):
 - Select the .crt file you created (e.g., .certs/localhost.crt).
 - Choose to Trust this certificate for identifying websites.
 
-**Create an account on [Hanko](https://hanko.io/) for handling authentication**
-Set up Hanko and the environment variable _VITE_HANKO_API_URL_
-
 **Register at [Mistral](https://mistra.ai) and create an API Key**
 
 ### Compile and Hot-Reload for Development

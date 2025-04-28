@@ -7,5 +7,3 @@ Ordered:
 □ deployment (Critical)
 □ extend with RAG (Critical)
 ✅ expand width of chat (Medium)
-□ customize Hanko login phase (Low)
-□ add access to Hanko profile (Low)

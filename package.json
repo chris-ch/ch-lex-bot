@@ -21,7 +21,6 @@
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
     "@mistralai/mistralai": "^1.6.0",
-    "@teamhanko/hanko-elements": "^1.5.2",
     "aws-amplify": "^6.14.3",
     "jwt-decode": "^4.0.0",
     "pinia": "^2.3.1",

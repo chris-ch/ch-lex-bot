@@ -23,9 +23,6 @@ importers:
       '@mistralai/mistralai':
         specifier: ^1.6.0
         version: 1.6.0(zod@3.24.3)
-      '@teamhanko/hanko-elements':
-        specifier: ^1.5.2
-        version: 1.5.2
       aws-amplify:
         specifier: ^6.14.3
         version: 6.14.3
@@ -1455,11 +1452,6 @@ packages:
   '@cypress/xvfb@1.2.4':
     resolution: {integrity: sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==}
 
-  '@denysvuika/preact-translate@0.5.1':
-    resolution: {integrity: sha512-qqKkpjzR8E55nlLA+H3gP9Q99mCCWiTtRupVQBh8YRZljX+Q8YbsaJtV3F+TX4DR4lV8NLgvv2+sSUcHoWvNtQ==}
-    peerDependencies:
-      preact: '>=10.13.0'
-
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
     engines: {node: '>=12'}
@@ -2742,17 +2734,6 @@ packages:
     resolution: {integrity: sha512-JtaY3FxmD+te+KSI2FJuEcfNC9T/DGGVf551babM7fAaXhjJUt7oSYurH1Devxd2+BOSUACCgt3buinx4UnmEA==}
     engines: {node: '>=18.0.0'}
 
-  '@teamhanko/hanko-elements@1.5.2':
-    resolution: {integrity: sha512-RrOgSoKwHbysDOOffOHn3p8s/zXxY2qvWwZFQdMeEP8Qp/C/RQBwGOzax0Y2gySWflDHM2uu4+tW8dXB+mZfQg==}
-
-  '@teamhanko/hanko-frontend-sdk@1.5.2':
-    resolution: {integrity: sha512-sSY2NGsJRndrC4HwxBIdog9gOGUzJ3EGKmEn7p+rzXzJaLik3ywJb25DloegPekMZQ8hwOzliF0uJh7kNxFgTA==}
-
-  '@teamhanko/preact-custom-element@4.2.2':
-    resolution: {integrity: sha512-3djCQr25IxQIgpidxD8J0fTQ7/hMuoa5Nmv7delQc6sX4kXgv9e/pE01cywpmGZLi69H1KUH4dmZ4cPPJQrsQQ==}
-    peerDependencies:
-      preact: 10.x
-
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
@@ -2764,9 +2745,6 @@ packages:
 
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
-
-  '@types/js-cookie@3.0.6':
-    resolution: {integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==}
 
   '@types/jsdom@21.1.7':
     resolution: {integrity: sha512-yOriVnggzrnQ3a9OKOCxaVuSug3w3/SbOj5i7VwXWZEyUNl3bLF9V3MfxGbZKuwqJOQyRfqXyROBB1CoZLFWzA==}
@@ -3448,9 +3426,6 @@ packages:
 
   citty@0.1.6:
     resolution: {integrity: sha512-tskPPKEs8D2KPafUypv2gxwJP8h/OaJmC82QQGGDQcHvXX43xF2VDACcJVmZ0EuSxkpO9Kc4MlrA3q0+FG58AQ==}
-
-  classnames@2.5.1:
-    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
 
   clean-stack@2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
@@ -5525,9 +5500,6 @@ packages:
   postgres-interval@1.2.0:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
-
-  preact@10.26.5:
-    resolution: {integrity: sha512-fmpDkgfGU6JYux9teDWLhj9mKN55tyepwYbxHgQuIxbWQzgFg5vk7Mrrtfx7xRxq798ynkY4DDDxZr235Kk+4w==}
 
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -10216,10 +10188,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@denysvuika/preact-translate@0.5.1(preact@10.26.5)':
-    dependencies:
-      preact: 10.26.5
-
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
 
@@ -11616,22 +11584,6 @@ snapshots:
       '@smithy/types': 4.2.0
       tslib: 2.8.1
 
-  '@teamhanko/hanko-elements@1.5.2':
-    dependencies:
-      '@denysvuika/preact-translate': 0.5.1(preact@10.26.5)
-      '@teamhanko/hanko-frontend-sdk': 1.5.2
-      '@teamhanko/preact-custom-element': 4.2.2(preact@10.26.5)
-      classnames: 2.5.1
-      preact: 10.26.5
-
-  '@teamhanko/hanko-frontend-sdk@1.5.2':
-    dependencies:
-      '@types/js-cookie': 3.0.6
-
-  '@teamhanko/preact-custom-element@4.2.2(preact@10.26.5)':
-    dependencies:
-      preact: 10.26.5
-
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
   '@tsconfig/node20@20.1.5': {}
@@ -11639,8 +11591,6 @@ snapshots:
   '@types/aws-lambda@8.10.149': {}
 
   '@types/estree@1.0.7': {}
-
-  '@types/js-cookie@3.0.6': {}
 
   '@types/jsdom@21.1.7':
     dependencies:
@@ -12502,8 +12452,6 @@ snapshots:
   citty@0.1.6:
     dependencies:
       consola: 3.4.2
-
-  classnames@2.5.1: {}
 
   clean-stack@2.2.0: {}
 
@@ -14676,8 +14624,6 @@ snapshots:
   postgres-interval@1.2.0:
     dependencies:
       xtend: 4.0.2
-
-  preact@10.26.5: {}
 
   prelude-ls@1.2.1: {}
 
