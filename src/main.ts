@@ -3,6 +3,10 @@ import { amplifyConfig } from './aws-config'
 
 Amplify.configure(amplifyConfig)
 
+// ⬇️ NEW lines
+import AmplifyVue from '@aws-amplify/ui-vue'
+import '@aws-amplify/ui-vue/styles.css' // <- default Amplify UI theme
+
 import './assets/main.css'
 
 import { createApp } from 'vue'
@@ -87,6 +91,7 @@ app.use(pinia)
 app.use(router)
 app.use(vuetify)
 app.use(i18n)
+app.use(AmplifyVue) // :contentReference[oaicite:0]{index=0}
 
 app.mount('#app')
 
