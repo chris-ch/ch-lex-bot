@@ -1,3 +1,8 @@
+import { Amplify } from 'aws-amplify'
+import { amplifyConfig } from './aws-config'
+
+Amplify.configure(amplifyConfig)
+
 import './assets/main.css'
 
 import { createApp } from 'vue'
@@ -14,7 +19,6 @@ import { createVuetify } from 'vuetify'
 import 'vuetify/styles'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import { register } from '@teamhanko/hanko-elements'
 import { useUserStore } from './stores/userStore'
 
 const revautLightTheme = {
@@ -73,13 +77,6 @@ const vuetify = createVuetify({
     },
   },
 })
-
-const hankoApi = import.meta.env.VITE_HANKO_API_URL
-if (hankoApi) {
-  register(hankoApi).catch((error: Error) => {
-    console.error('error during Hanko API registration:', error)
-  })
-}
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
