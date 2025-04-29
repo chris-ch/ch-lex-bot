@@ -1,15 +1,34 @@
 version: 1
+
+backend:
+  phases:
+    preBuild:
+      commands:
+        - corepack enable
+        - corepack prepare pnpm@10.9.0 --activate
+        - pnpm install --frozen-lockfile
+    build:
+      commands:
+        - npx ampx pipeline-deploy \
+          --branch $AWS_BRANCH \
+          --app-id $AWS_APP_ID \
+          --outputs-out-dir ./
+
 frontend:
   phases:
     preBuild:
       commands:
-        - npm install -g pnpm # ts-node no longer required
-        # ––– install deps; allow post-install scripts so CI is quiet –––
-        - pnpm install --unsafe-perm # or: pnpm approve-builds -w a
+        - corepack enable
+        - corepack prepare pnpm@10.9.0 --activate
+        - pnpm install --frozen-lockfile
     build:
       commands:
-        - pnpm build # calls your "build" script
+        - pnpm build
   artifacts:
     baseDirectory: dist
     files:
       - '**/*'
+
+cache:
+  paths:
+    - node_modules/**/*
