@@ -16,12 +16,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@aws-amplify/core": "^6.11.3",
+    "@aws-amplify/core": "^6.11.4",
     "@aws-amplify/ui-vue": "^4.3.2",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
     "@mistralai/mistralai": "^1.6.0",
-    "aws-amplify": "^6.14.3",
+    "aws-amplify": "^6.14.4",
     "jwt-decode": "^4.0.0",
     "pinia": "^2.3.1",
     "pinia-plugin-persistedstate": "^4.2.0",
@@ -44,7 +44,7 @@
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
     "aws-cdk": "2.1003.0",
-    "aws-cdk-lib": "2.180.0",
+    "aws-cdk-lib": "2.192.0",
     "constructs": "^10.4.2",
     "cypress": "^13.17.0",
     "esbuild": "^0.25.3",
