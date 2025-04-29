@@ -1,10 +1,5 @@
-import type { ResourcesConfig } from 'aws-amplify';
+import type { ResourcesConfig } from 'aws-amplify'
+import { parseAmplifyConfig } from 'aws-amplify/utils'
+import outputs from '../amplify_outputs.json'
 
-export const amplifyConfig: ResourcesConfig = {
-  Auth: {
-    Cognito: {
-      userPoolId:       import.meta.env.VITE_USER_POOL_ID,
-      userPoolClientId: import.meta.env.VITE_USER_POOL_CLIENT_ID,
-    },
-  },
-};
+export const amplifyConfig: ResourcesConfig = parseAmplifyConfig(outputs)

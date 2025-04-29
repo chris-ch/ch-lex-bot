@@ -45,16 +45,16 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import LanguageSwitcher from './components/LanguageSwitcher.vue'
 import ProfileDropdown from './components/ProfileDropdown.vue'
-import { watch } from 'vue'
+import { watch, toRefs } from 'vue'
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-vue'
 
 const { t } = useI18n()
-const { user } = useAuthenticator()
+const { user } = toRefs(useAuthenticator())
 const userStore = useUserStore()
 const { mistralAPIKey } = storeToRefs(userStore)
 
 watch(
-  () => user.value,
+  user,
   u => {
     if (u) {
       userStore.setUserId(u.userId ?? u.username)
