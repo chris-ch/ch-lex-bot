@@ -1,5 +1,6 @@
 {
   "name": "vue-project",
+  "packageManager": "pnpm@10.9.0",
   "version": "0.0.0",
   "private": true,
   "type": "module",
