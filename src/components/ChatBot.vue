@@ -181,7 +181,6 @@ const setError = (message: string) => {
   console.error('An error occurred:', message)
 }
 
-
 function decompressBase64Zlib(base64: string): string {
   const binaryString = atob(base64)
   const byteArray = new Uint8Array(binaryString.length)
@@ -192,9 +191,11 @@ function decompressBase64Zlib(base64: string): string {
   return decompressed
 }
 
-
 // Message handling
-function buildRecapPrompt(userMessage: string, decisions: DecisionMapping[]): string {
+function buildRecapPrompt(
+  userMessage: string,
+  decisions: DecisionMapping[],
+): string {
   const decisionBlocks = decisions.map(d => {
     const decompressedText = decompressBase64Zlib(d.text_compressed)
     return `### ${t('label.decision')} ${d.docref}\n\n${decompressedText.trim()}`
@@ -202,7 +203,9 @@ function buildRecapPrompt(userMessage: string, decisions: DecisionMapping[]): st
 
   const fullContext = decisionBlocks.join('\n\n---\n\n')
 
-  return `${fullContext}\n\n[user]\n${userMessage}\n[/user]`
+  const fullPrompt = `${fullContext}\n\n[user]\n${userMessage}\n[/user]`
+  console.log('Constructed Prompt:', fullPrompt)
+  return fullPrompt
 }
 
 function chunksToPlainText(
