@@ -30,10 +30,3 @@ frontend:
 cache:
   paths:
     - node_modules/**/*
-
-# 👇 this part is key
-customHeaders:
-  - pattern: '**/index.html'
-    headers:
-      - key: 'Cache-Control'
-        value: 'no-cache, no-store, must-revalidate'

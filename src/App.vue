@@ -32,7 +32,7 @@
           <span style="color: #e03e29">re</span>&nbsp;<span
             style="color: #d2d2d2"
             >|</span
-          >&nbsp;<span style="color: #505050">vault sàrl - 2024</span>
+          >&nbsp;<span style="color: #505050">vault sàrl - 2025</span>
         </div>
       </v-footer>
     </v-app>
