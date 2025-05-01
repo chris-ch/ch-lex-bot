@@ -196,6 +196,7 @@ function buildRecapPrompt(
   userMessage: string,
   decisions: DecisionMapping[],
 ): string {
+  console.log("'Building recap prompt...")
   const decisionBlocks = decisions.map(d => {
     const decompressedText = decompressBase64Zlib(d.text_compressed)
     return `### ${t('label.decision')} ${d.docref}\n\n${decompressedText.trim()}`
@@ -243,9 +244,6 @@ async function sendMessage() {
 
   // Call Lambda and get results
   const decisions = await findDecisions(trimmedMessage)
-  const reply = decisions.map(r => `• [${r.docref}](${r.url})`).join('\n')
-
-  chatStore.addMessage({ sender: 'user', text: reply || '(no result)' })
 
   // Pass results to loadBotResponse
   await loadBotResponse(trimmedMessage, decisions)
