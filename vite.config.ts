@@ -9,6 +9,11 @@ export default defineConfig(({ command }) => {
   const isDev = command === 'serve'
 
   return {
+    build: {
+      rollupOptions: {
+        input: 'index.v2.html',
+      },
+    },
     plugins: [
       vue(),
       vueJsx(),
