@@ -280,6 +280,7 @@ async function findDecisions(message: string): Promise<DecisionMapping[]> {
 async function loadBotResponse(message: string, decisions: DecisionMapping[]) {
   try {
     const client = getMistralClient()
+    console.log('Mistral client initialized')
     const llmResponse: ChatCompletionResponse = await client.chat.complete({
       model: MODEL_CODE,
       messages: [
