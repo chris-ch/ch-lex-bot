@@ -1,6 +1,7 @@
 # ⚖️ Lex Bot 🇨🇭
 
 ## Prompts ideas
+
 ```
 Voici un cas reçu pour un avis juridique:
 
@@ -89,4 +90,27 @@ pnpm test:e2e
 
 ```sh
 pnpm lint
+```
+
+# Amplify day-to-day cheatsheet
+
+| I want to…                                          | Local command                                  | What happens in CI after I push                                                 |
+| --------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------- |
+| **Add/modify data models**                          | Edit `amplify/data/*.ts` → save                | `ampx pipeline-deploy` updates DynamoDB tables & GraphQL resolvers              |
+| **Add a Lambda function**                           | `npx create amplify function myFn`             | Function built & deployed; role & permissions auto-generated                    |
+| **Add custom auth flows, groups, triggers**         | Edit `amplify/auth/resource.ts`                | Cognito user-pool updated with diff-based migration                             |
+| **Store/rotate a secret**                           | _Amplify Console → Backend → Secrets_          | Secret injected into sandbox on next `npx ampx sandbox` and into builds via SSM |
+| **Try changes quickly**                             | `npx ampx sandbox` (already running)           | Hot-reloads backend in <60 s                                                    |
+| **Preview a PR**                                    | Push branch `feature/foo`                      | Amplify spins up isolated **feature/foo** backend + frontend preview URL        |
+| **Run end-to-end tests** (you already have Cypress) | `pnpm cypress run` locally                     | Add a **test** phase in `amplify.yml`; fails the build if tests fail            |
+| **Rebuild everything from scratch**                 | `npx ampx sandbox cleanup && npx ampx sandbox` | Delete/recreate sandbox stack                                                   |
+
+# Amplify sandbox
+
+```
+npx ampx sandbox
+```
+
+```
+npx ampx sandbox cleanup
 ```

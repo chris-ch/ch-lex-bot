@@ -99,6 +99,9 @@ import type { ModelCode } from '@/types/mistral'
 import { useI18n } from 'vue-i18n'
 import type { ChatCompletionResponse } from '@mistralai/mistralai/models/components'
 import type { ContentChunk } from '@mistralai/mistralai/models/components'
+import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda'
+import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity'
+import type { DecisionMapping } from '@/types/fedCourtDecisions'
 
 // Types
 interface Props {
@@ -123,6 +126,14 @@ const errorMessage = ref('')
 
 // Props
 const props = defineProps<Props>()
+
+const fedCourtDecisionsClient = new LambdaClient({
+  region: 'us-east-1', // your region
+  credentials: fromCognitoIdentityPool({
+    clientConfig: { region: 'us-east-1' },
+    identityPoolId: 'us-east-1_APPGci0Uh', // your identity pool
+  }),
+})
 
 // Initialize Mistral client
 const getMistralClient = () => new Mistral({ apiKey: userStore.mistralAPIKey })
@@ -210,8 +221,42 @@ function sendMessage() {
   if (!trimmedMessage) return
 
   chatStore.addMessage({ sender: 'user', text: trimmedMessage })
+
+  // call Lambda and show result
+  findDecisions(trimmedMessage).then(results => {
+    const reply = results.map(r => `• [${r.docref}](${r.url})`).join('\n')
+
+    chatStore.addMessage({ sender: 'user', text: reply || '(no result)' })
+  })
+
   loadBotResponse()
   userMessage.value = ''
+}
+
+async function findDecisions(message: string): Promise<DecisionMapping[]> {
+  const cmd = new InvokeCommand({
+    FunctionName: 'manual-fed-court-decisions-search',
+    Payload: new TextEncoder().encode(JSON.stringify({ sentences: [message] })),
+  })
+
+  const result = await fedCourtDecisionsClient.send(cmd)
+  const payload = result.Payload ? new TextDecoder().decode(result.Payload) : ''
+
+  try {
+    const parsed = JSON.parse(payload)
+
+    // Lambda is returning HTTP-style payload, need to parse `body` as well
+    if (parsed.statusCode === 200 && parsed.body) {
+      const body = JSON.parse(parsed.body)
+      const firstResultSet = body.mappings?.[0] ?? []
+      return firstResultSet
+    } else {
+      return []
+    }
+  } catch (err) {
+    console.error('Failed to parse Lambda response:', err)
+    return []
+  }
 }
 
 async function loadBotResponse() {

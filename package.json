@@ -1,6 +1,6 @@
 {
   "name": "vue-project",
-  "packageManager": "pnpm@10.9.0",
+  "packageManager": "pnpm@10.10.0",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -19,6 +19,8 @@
   "dependencies": {
     "@aws-amplify/core": "^6.11.4",
     "@aws-amplify/ui-vue": "^4.3.2",
+    "@aws-sdk/client-lambda": "^3.799.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.799.0",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
     "@mistralai/mistralai": "^1.6.0",
@@ -35,6 +37,7 @@
     "@aws-amplify/backend": "^1.16.0",
     "@aws-amplify/backend-cli": "^1.7.0",
     "@tsconfig/node20": "^20.1.5",
+    "@types/aws-lambda": "^8.10.149",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20.17.31",
     "@vitejs/plugin-vue": "^5.2.3",
