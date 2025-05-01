@@ -12,7 +12,7 @@ export default defineConfig(({ command }) => {
     base: '/',
     build: {
       rollupOptions: {
-        input: 'index.v2.html',
+        input: 'index.v3.html',
       },
     },
     plugins: [
