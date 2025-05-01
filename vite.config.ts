@@ -9,6 +9,7 @@ export default defineConfig(({ command }) => {
   const isDev = command === 'serve'
 
   return {
+    base: '/',
     build: {
       rollupOptions: {
         input: 'index.v2.html',
@@ -25,9 +26,12 @@ export default defineConfig(({ command }) => {
           if (fs.existsSync(file)) {
             const html = fs.readFileSync(file, 'utf-8')
             const tag = `<!-- build: ${new Date().toISOString()} -->`
-            fs.writeFileSync(html.includes('<head>')
-              ? file.replace(/<head>/, `<head>\n  ${tag}`)
-              : file, html)
+            fs.writeFileSync(
+              html.includes('<head>')
+                ? file.replace(/<head>/, `<head>\n  ${tag}`)
+                : file,
+              html,
+            )
           }
         },
       },
