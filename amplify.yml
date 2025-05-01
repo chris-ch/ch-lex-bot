@@ -36,3 +36,7 @@ customHeaders:
     headers:
       - key: 'Cache-Control'
         value: 'no-cache, no-store, must-revalidate'
+  - pattern: '**/*.*'
+    headers:
+      - key: 'Cache-Control'
+        value: 'max-age=31536000, immutable'

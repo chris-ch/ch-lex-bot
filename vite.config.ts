@@ -5,19 +5,33 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import fs from 'fs'
 import path from 'path'
-
 export default defineConfig(({ command }) => {
-  const isDev = command === 'serve' // 'serve' = vite dev, 'build' = vite build
+  const isDev = command === 'serve'
 
   return {
-    plugins: [vue(), vueJsx()],
+    plugins: [
+      vue(),
+      vueJsx(),
+      // 👇 Only run during build, not dev
+      !isDev && {
+        name: 'inject-build-comment',
+        closeBundle() {
+          const file = path.resolve(__dirname, 'dist/index.html')
+          if (fs.existsSync(file)) {
+            const html = fs.readFileSync(file, 'utf-8')
+            const tag = `<!-- build: ${new Date().toISOString()} -->`
+            fs.writeFileSync(html.includes('<head>')
+              ? file.replace(/<head>/, `<head>\n  ${tag}`)
+              : file, html)
+          }
+        },
+      },
+    ].filter(Boolean), // filters out `false` if isDev
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
-
-    // ⬇️ only include HTTPS + custom host/port while running `vite dev`
     ...(isDev && {
       server: {
         https: {
