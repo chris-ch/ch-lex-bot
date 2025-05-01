@@ -131,7 +131,7 @@ const fedCourtDecisionsClient = new LambdaClient({
   region: 'us-east-1', // your region
   credentials: fromCognitoIdentityPool({
     clientConfig: { region: 'us-east-1' },
-    identityPoolId: 'us-east-1_APPGci0Uh', // your identity pool
+    identityPoolId: 'us-east-1:7dccf4c0-5116-4dc4-8946-f86516bd5445', // your identity pool
   }),
 })
 
