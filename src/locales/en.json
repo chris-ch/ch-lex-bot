@@ -8,9 +8,7 @@
   "error.unknown": "An unkown error occurred: ",
   "logout": "Log off",
   "send": "Send",
-  "prompt.suggestions.intro": "As a legal assistant specializing in Swiss law, your role is to help the user draft a description of their legal situation. The user's description follows between tags [user] and [/user]:\n",
-  "prompt.suggestions.instruct": "Analyze the  description above provided by the user and briefly rephrase the key elements of the situation, hinting the user towards improvements, but do not answer to the user's question. For example if necessary, suggest additional information in a general and hypothetical manner, using the conditional tense. Check if the general context, directly involved parties, timeline, and general location in Switzerland are mentioned. In particular the locality and Canton are particularly useful information. Avoid requesting for too detailed information, like exact address or exact time.\nImportant instructions:\n- Do not ask any direct questions.\n- Avoid specific legal advice.\n- Remain neutral and factual.\n- Focus on relevant aspects of the case.\n- Formulate your response concisely and informally.",
-  "prompt.keywords.intro": "As a legal assistant specializing in Swiss law, your role is to help the user draft a description of their legal situation. The user's description follows between tags [user] and [/user]:\n",
-  "prompt.keywords.instruct": "Analyze the  description above provided by the user and provide a list of very specific keywords related to the subject, suitable for conducting a relevant legal search in the texts of the concerned jurisdiction. Limit yourself to listing the keywords as a comma-separated string, without providing any context.",
-  "user.input.mistral.key": "Please enter a valid Mistral API Key..."
+  "prompt.suggestions.intro": "As a legal assistant specialized in Swiss law, your role is to provide an opinion based on the case description provided by the user, enclosed between the [user] and [/user] tags. The case presentation is preceded by a set of legal decisions that may be relevant:\n",
+  "user.input.mistral.key": "Please enter a valid Mistral API Key...",
+  "label.decision": "Decision"
 }

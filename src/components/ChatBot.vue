@@ -102,6 +102,7 @@ import type { ContentChunk } from '@mistralai/mistralai/models/components'
 import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda'
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity'
 import type { DecisionMapping } from '@/types/fedCourtDecisions'
+import pako from 'pako'
 
 // Types
 interface Props {
@@ -180,14 +181,29 @@ const setError = (message: string) => {
   console.error('An error occurred:', message)
 }
 
-// Message handling
-const buildRecapPrompt = (userInput: string): string => {
-  return `${t('prompt.suggestions.intro')}[user]${userInput}[/user]${t('prompt.suggestions.instruct')}`
+
+function decompressBase64Zlib(base64: string): string {
+  const binaryString = atob(base64)
+  const byteArray = new Uint8Array(binaryString.length)
+  for (let i = 0; i < binaryString.length; i++) {
+    byteArray[i] = binaryString.charCodeAt(i)
+  }
+  const decompressed = pako.inflate(byteArray, { to: 'string' })
+  return decompressed
 }
 
-//const buildKeywordsPrompt = (userInput: string): string => {
-//  return `${t('prompt.keywords.intro')}[user]${userInput}[/user]${t('prompt.keywords.instruct')}`
-//}
+
+// Message handling
+function buildRecapPrompt(userMessage: string, decisions: DecisionMapping[]): string {
+  const decisionBlocks = decisions.map(d => {
+    const decompressedText = decompressBase64Zlib(d.text_compressed)
+    return `### ${t('label.decision')} ${d.docref}\n\n${decompressedText.trim()}`
+  })
+
+  const fullContext = decisionBlocks.join('\n\n---\n\n')
+
+  return `${fullContext}\n\n[user]\n${userMessage}\n[/user]`
+}
 
 function chunksToPlainText(
   chunks: string | ContentChunk[] | undefined,
@@ -216,20 +232,21 @@ function processLLMResponse(response: ChatCompletionResponse) {
 }
 
 // Main functions
-function sendMessage() {
+async function sendMessage() {
   const trimmedMessage = userMessage.value.trim()
   if (!trimmedMessage) return
 
   chatStore.addMessage({ sender: 'user', text: trimmedMessage })
 
-  // call Lambda and show result
-  findDecisions(trimmedMessage).then(results => {
-    const reply = results.map(r => `• [${r.docref}](${r.url})`).join('\n')
+  // Call Lambda and get results
+  const decisions = await findDecisions(trimmedMessage)
+  const reply = decisions.map(r => `• [${r.docref}](${r.url})`).join('\n')
 
-    chatStore.addMessage({ sender: 'user', text: reply || '(no result)' })
-  })
+  chatStore.addMessage({ sender: 'user', text: reply || '(no result)' })
 
-  loadBotResponse()
+  // Pass results to loadBotResponse
+  await loadBotResponse(trimmedMessage, decisions)
+
   userMessage.value = ''
 }
 
@@ -259,7 +276,7 @@ async function findDecisions(message: string): Promise<DecisionMapping[]> {
   }
 }
 
-async function loadBotResponse() {
+async function loadBotResponse(message: string, decisions: DecisionMapping[]) {
   try {
     const client = getMistralClient()
     const llmResponse: ChatCompletionResponse = await client.chat.complete({
@@ -267,7 +284,7 @@ async function loadBotResponse() {
       messages: [
         {
           role: 'user',
-          content: buildRecapPrompt(userMessage.value),
+          content: buildRecapPrompt(message, decisions),
         },
       ],
     })

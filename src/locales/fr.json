@@ -8,9 +8,7 @@
   "error.unknown": "An unkown error occurred: ",
   "logout": "Déconnexion",
   "send": "Envoyer",
-  "prompt.suggestions.intro": "En tant qu'assistant juridique spécialisé en droit suisse, ton rôle est d'aider l'utilisateur à rédiger une description de sa situation juridique. La description de l'utilisateur suit, entre les tags [user] et [/user] :\n",
-  "prompt.suggestions.instruct": "Analyse la description ci-dessus fournie par l'utilisateur et reformule brièvement les éléments clés de la situation, en orientant l'utilisateur vers des améliorations, mais sans répondre à sa question. Par exemple, si nécessaire, suggère des informations supplémentaires de manière générale et hypothétique, en utilisant le conditionnel. Vérifie si le contexte général, les parties directement impliquées, la chronologie et la localisation générale en Suisse sont mentionnés. En particulier, la localité et le canton sont des informations particulièrement utiles. Évite de demander des informations trop détaillées, comme une adresse exacte ou une heure précise.\nInstructions importantes :\n- Ne pose pas de questions directes.\n- Évite les conseils juridiques spécifiques.\n- Reste neutre et factuel.\n- Concentre-toi sur les aspects pertinents du cas.\n- Formule ta réponse de manière concise et informelle.",
-  "prompt.keywords.intro": "En tant qu'assistant juridique spécialisé en droit suisse, ton rôle est d'aider l'utilisateur à rédiger une description de sa situation juridique. La description de l'utilisateur suit, entre les tags [user] et [/user] :\n",
-  "prompt.keywords.instruct": "Analyse la description ci-dessus fournie par l'utilisateur et fournis une liste de mots-clés très spécifiques liés au sujet, adaptés pour effectuer une recherche juridique pertinente dans les textes de la juridiction concernée. Limite-toi à énumérer les mots-clés sous forme de chaîne séparée par des virgules, sans fournir de contexte.",
-  "user.input.mistral.key": "Prière d'entrer une clé d'API Mistral valide..."
+  "prompt.suggestions.intro": "En tant qu'assistant juridique spécialisé en droit suisse, ton rôle est de fournir un avis en fonction de la description du cas fourni par l'utilisateur qui suit, entre les tags [user] et [/user]. L'exposé de la situation est précédé par un ensemble de textes de jurisprudence, qui peut être pertinente :\n",
+  "user.input.mistral.key": "Prière d'entrer une clé d'API Mistral valide...",
+  "label.decision": "Décision"
 }
