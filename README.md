@@ -1,5 +1,9 @@
 # ⚖️ Lex Bot 🇨🇭
 
+## Contributing
+
+We welcome contributions! Please read our [contributing guidelines](CONTRIBUTING.md) before submitting a pull request.
+
 ## Prompts ideas
 
 ```

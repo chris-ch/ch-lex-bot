@@ -25,9 +25,7 @@ export const useUserStore = defineStore('user', {
 
     setMistralAPIKey(value: string) {
       this.mistralAPIKey = value
-      if (this.userId) {
-        localStorage.setItem(`mistralAPIKey-${this.userId}`, value)
-      }
+      if (this.userId) localStorage.setItem(`mistralAPIKey-${this.userId}`, value)
     },
 
     loadMistralAPIKey() {

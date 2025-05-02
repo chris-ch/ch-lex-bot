@@ -127,8 +127,7 @@ const signIn = async () => {
     }
   } catch (error) {
     console.error('Sign in error:', error)
-    errorMessage.value =
-      error instanceof Error ? error.message : 'Sign in failed'
+    errorMessage.value = error instanceof Error ? error.message : 'Sign in failed'
   } finally {
     loading.value = false
   }
