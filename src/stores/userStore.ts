@@ -4,14 +4,12 @@ import { signOut } from 'aws-amplify/auth'
 interface UserInfo {
   userId: string | null
   userEmail: string | null
-  mistralAPIKey: string
 }
 
 export const useUserStore = defineStore('user', {
   state: (): UserInfo => ({
     userId: null,
     userEmail: null,
-    mistralAPIKey: '',
   }),
 
   actions: {
@@ -23,22 +21,9 @@ export const useUserStore = defineStore('user', {
       this.userEmail = email
     },
 
-    setMistralAPIKey(value: string) {
-      this.mistralAPIKey = value
-      if (this.userId) localStorage.setItem(`mistralAPIKey-${this.userId}`, value)
-    },
-
-    loadMistralAPIKey() {
-      if (this.userId) {
-        const storedValue = localStorage.getItem(`mistralAPIKey-${this.userId}`)
-        this.mistralAPIKey = storedValue !== null ? storedValue : ''
-      }
-    },
-
     init(userId: string, email: string | null = null) {
       this.userId = userId
       this.userEmail = email
-      this.loadMistralAPIKey()
     },
 
     async logout() {
@@ -59,7 +44,6 @@ export const useUserStore = defineStore('user', {
       }
       this.userId = null
       this.userEmail = null
-      this.mistralAPIKey = ''
     },
   },
 })

@@ -1,5 +1,19 @@
 <template>
-  <authenticator v-slot="{ user, signOut }">
+  <authenticator
+    :form-fields="{
+      signUp: {
+        email: { order: 1 },
+        password: { order: 2 },
+        'custom:openai-api-key': {
+          label: 'OpenAI API Key (Optional)',
+          placeholder: 'sk-...',
+          required: false,
+          order: 1,
+        },
+      },
+    }"
+    v-slot="{ user, signOut }"
+  >
     <!-- Everything inside this slot renders only when the user is signed-in -->
     <v-app>
       <v-app-bar color="#BBBBBB">
@@ -41,7 +55,6 @@
 
 <script setup lang="ts">
 import { useUserStore } from '@/stores/userStore'
-import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import LanguageSwitcher from './components/LanguageSwitcher.vue'
 import ProfileDropdown from './components/ProfileDropdown.vue'
@@ -51,7 +64,6 @@ import { Authenticator, useAuthenticator } from '@aws-amplify/ui-vue'
 const { t } = useI18n()
 const { user } = toRefs(useAuthenticator())
 const userStore = useUserStore()
-const { mistralAPIKey } = storeToRefs(userStore)
 
 watch(
   user,
@@ -63,9 +75,8 @@ watch(
       userStore.$reset()
     }
   },
-  { immediate: true },
+  { immediate: true }
 )
 
-console.info('using Mistral API key: ' + mistralAPIKey)
 console.log(t('send'))
 </script>

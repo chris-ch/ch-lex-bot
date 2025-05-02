@@ -92,17 +92,11 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { Mistral } from '@mistralai/mistralai'
-import { useUserStore } from '@/stores/userStore'
 import { useChatStore } from '@/stores/chatStore'
-import type { ModelCode } from '@/types/mistral'
 import { useI18n } from 'vue-i18n'
-import type { ChatCompletionResponse } from '@mistralai/mistralai/models/components'
-import type { ContentChunk } from '@mistralai/mistralai/models/components'
-import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda'
-import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity'
 import type { DecisionMapping } from '@/types/fedCourtDecisions'
 import pako from 'pako'
+import { fetchAuthSession } from 'aws-amplify/auth'
 
 // Types
 interface Props {
@@ -110,14 +104,12 @@ interface Props {
 }
 
 // Constants
-const MODEL_CODE: ModelCode = 'mistral-large-2407'
 const ERROR_CODES = {
   UNAUTHORIZED: 401,
 } as const
 
 // Composables
 const { t } = useI18n()
-const userStore = useUserStore()
 const chatStore = useChatStore()
 
 // Refs
@@ -128,24 +120,13 @@ const errorMessage = ref('')
 // Props
 const props = defineProps<Props>()
 
-const fedCourtDecisionsClient = new LambdaClient({
-  region: 'us-east-1', // your region
-  credentials: fromCognitoIdentityPool({
-    clientConfig: { region: 'us-east-1' },
-    identityPoolId: 'us-east-1:7dccf4c0-5116-4dc4-8946-f86516bd5445', // your identity pool
-  }),
-})
-
-// Initialize Mistral client
-const getMistralClient = () => new Mistral({ apiKey: userStore.mistralAPIKey })
-
 // Watchers
 watch(
   () => props.showUnknownError,
   newValue => {
     errorMessage.value = newValue
     showAlert.value = Boolean(newValue)
-  },
+  }
 )
 
 // Error handling
@@ -164,8 +145,6 @@ const handleError = (error: unknown) => {
 
     const errorStatus = parseInt(statusMatch[1], 10)
     if (errorStatus === ERROR_CODES.UNAUTHORIZED) {
-      console.log('Resetting Mistral API key due to unauthorized access')
-      userStore.setMistralAPIKey('')
       return
     }
 
@@ -191,50 +170,6 @@ function decompressBase64Zlib(base64: string): string {
   return decompressed
 }
 
-// Message handling
-function buildRecapPrompt(
-  userMessage: string,
-  decisions: DecisionMapping[],
-): string {
-  console.log("'Building recap prompt...")
-  const decisionBlocks = decisions.map(d => {
-    const decompressedText = decompressBase64Zlib(d.text_compressed)
-    return `### ${t('label.decision')} ${d.docref}\n\n${decompressedText.trim()}`
-  })
-
-  const fullContext = decisionBlocks.join('\n\n---\n\n')
-
-  const fullPrompt = `${fullContext}\n\n[user]\n${userMessage}\n[/user]`
-  console.log('Constructed Prompt:', fullPrompt)
-  return fullPrompt
-}
-
-function chunksToPlainText(
-  chunks: string | ContentChunk[] | undefined,
-): string {
-  if (!chunks) return ''
-
-  if (typeof chunks === 'string') return chunks // nothing to unwrap
-
-  return chunks
-    .map(chunk => {
-      if (chunk.type === 'text') {
-        return chunk.text // ✅ safe: TextChunk
-      }
-      if (chunk.type === 'image_url') {
-        return `[image: ${chunk.imageUrl ?? '…'}]` // or '' if you prefer
-      }
-      return ''
-    })
-    .join('')
-}
-
-function processLLMResponse(response: ChatCompletionResponse) {
-  const raw = response.choices?.[0]?.message?.content
-  const text = chunksToPlainText(raw ?? undefined)
-  chatStore.addMessage({ sender: 'assistant', text })
-}
-
 // Main functions
 async function sendMessage() {
   const trimmedMessage = userMessage.value.trim()
@@ -252,45 +187,52 @@ async function sendMessage() {
 }
 
 async function findDecisions(message: string): Promise<DecisionMapping[]> {
-  const cmd = new InvokeCommand({
-    FunctionName: 'manual-fed-court-decisions-search',
-    Payload: new TextEncoder().encode(JSON.stringify({ sentences: [message] })),
-  })
-
-  const result = await fedCourtDecisionsClient.send(cmd)
-  const payload = result.Payload ? new TextDecoder().decode(result.Payload) : ''
-
   try {
-    const parsed = JSON.parse(payload)
+    const session = await fetchAuthSession()
+    const idToken = session.tokens?.idToken?.toString()
 
-    // Lambda is returning HTTP-style payload, need to parse `body` as well
-    if (parsed.statusCode === 200 && parsed.body) {
-      const body = JSON.parse(parsed.body)
-      const firstResultSet = body.mappings?.[0] ?? []
-      return firstResultSet
-    } else {
+    if (!idToken) {
+      throw new Error('Not authenticated')
+    }
+
+    console.log('idToken:', idToken)
+
+    const response = await fetch(
+      'https://ykbuwr0csh.execute-api.us-east-1.amazonaws.com/default/manual-fed-court-decisions-search',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // 👈 required if CORS has Allow-Credentials: true
+        body: JSON.stringify({ sentences: [message] }),
+      }
+    )
+    if (!response.ok) {
+      console.error('API Gateway call failed:', response.statusText)
       return []
     }
-  } catch (err) {
-    console.error('Failed to parse Lambda response:', err)
+
+    const body = await response.json()
+    const firstResultSet = body.mappings?.[0] ?? []
+    return firstResultSet
+  } catch (error) {
+    console.error('Error while calling decisions API:', error)
     return []
   }
 }
 
 async function loadBotResponse(message: string, decisions: DecisionMapping[]) {
   try {
-    const client = getMistralClient()
-    console.log('Mistral client initialized')
-    const llmResponse: ChatCompletionResponse = await client.chat.complete({
-      model: MODEL_CODE,
-      messages: [
-        {
-          role: 'user',
-          content: buildRecapPrompt(message, decisions),
-        },
-      ],
-    })
-    processLLMResponse(llmResponse)
+    console.log('processing message: ' + message)
+    for (const decision of decisions) {
+      const decompressedText = decompressBase64Zlib(decision.text_compressed)
+      chatStore.addMessage({
+        sender: 'assistant',
+        text: decompressedText,
+      })
+    }
   } catch (error) {
     handleError(error)
   }
