@@ -22,19 +22,19 @@ export const useChatStore = defineStore('chat', () => {
 
   function clearMessages() {
     messages.value = []
-    if (userId) {
+    if (userId.value) {
       sessionStorage.removeItem(getStorageKey())
     }
   }
 
   // Helper function to create a unique storage key based on userId
   function getStorageKey() {
-    return `chat-messages-${userId}`
+    return `chat-messages-${userId.value}`
   }
 
   // Load messages for the specific user from sessionStorage
   function loadMessagesFromStorage() {
-    if (!userId) return
+    if (!userId.value) return
     const storedMessages = sessionStorage.getItem(getStorageKey())
     if (storedMessages) {
       messages.value = JSON.parse(storedMessages)
@@ -43,7 +43,7 @@ export const useChatStore = defineStore('chat', () => {
 
   // Save messages to sessionStorage
   function saveMessagesToStorage() {
-    if (!userId) return
+    if (!userId.value) return
     sessionStorage.setItem(getStorageKey(), JSON.stringify(messages.value))
   }
 
