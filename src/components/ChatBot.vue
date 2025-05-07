@@ -94,9 +94,8 @@
 import { ref, watch } from 'vue'
 import { useChatStore } from '@/stores/chatStore'
 import { useI18n } from 'vue-i18n'
-import type { DecisionMapping } from '@/types/fedCourtDecisions'
-import pako from 'pako'
 import { fetchAuthSession } from 'aws-amplify/auth'
+import type { AnalysisResult } from '@/types/fedCourtDecisions'
 
 // Types
 interface Props {
@@ -160,16 +159,6 @@ const setError = (message: string) => {
   console.error('An error occurred:', message)
 }
 
-function decompressBase64Zlib(base64: string): string {
-  const binaryString = atob(base64)
-  const byteArray = new Uint8Array(binaryString.length)
-  for (let i = 0; i < binaryString.length; i++) {
-    byteArray[i] = binaryString.charCodeAt(i)
-  }
-  const decompressed = pako.inflate(byteArray, { to: 'string' })
-  return decompressed
-}
-
 // Main functions
 async function sendMessage() {
   const trimmedMessage = userMessage.value.trim()
@@ -185,8 +174,7 @@ async function sendMessage() {
 
   userMessage.value = ''
 }
-
-async function findDecisions(message: string): Promise<DecisionMapping[]> {
+async function findDecisions(message: string): Promise<AnalysisResult[]> {
   try {
     const session = await fetchAuthSession()
     const idToken = session.tokens?.idToken?.toString()
@@ -194,8 +182,6 @@ async function findDecisions(message: string): Promise<DecisionMapping[]> {
     if (!idToken) {
       throw new Error('Not authenticated')
     }
-
-    console.log('idToken:', idToken)
 
     const response = await fetch(
       'https://ykbuwr0csh.execute-api.us-east-1.amazonaws.com/default/manual-fed-court-decisions-search',
@@ -205,33 +191,44 @@ async function findDecisions(message: string): Promise<DecisionMapping[]> {
           Authorization: `Bearer ${idToken}`,
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // 👈 required if CORS has Allow-Credentials: true
+        credentials: 'include',
         body: JSON.stringify({ sentences: [message] }),
       }
     )
+
     if (!response.ok) {
       console.error('API Gateway call failed:', response.statusText)
       return []
     }
-
     const body = await response.json()
-    const firstResultSet = body.mappings?.[0] ?? []
-    return firstResultSet
+    return body.analyses ?? []
   } catch (error) {
     console.error('Error while calling decisions API:', error)
     return []
   }
 }
 
-async function loadBotResponse(message: string, decisions: DecisionMapping[]) {
+async function loadBotResponse(message: string, analyses: AnalysisResult[]) {
   try {
-    console.log('processing message: ' + message)
-    for (const decision of decisions) {
-      const decompressedText = decompressBase64Zlib(decision.text_compressed)
+    for (const analysis of analyses) {
+      // Ajouter l'analyse en tant que réponse principale
       chatStore.addMessage({
         sender: 'assistant',
-        text: decompressedText,
+        text: `🔍 **Analyse** : ${analysis.analysis}`,
       })
+
+      // Ajouter chaque document séparément
+      for (const doc of analysis.documents) {
+        let docText = `📄 **${doc.docref}**\n${doc.text}`
+        if (doc.url) {
+          docText += `\n🔗 [Voir la décision](${doc.url})`
+        }
+
+        chatStore.addMessage({
+          sender: 'assistant',
+          text: docText,
+        })
+      }
     }
   } catch (error) {
     handleError(error)

@@ -1,5 +1,11 @@
-export interface DecisionMapping {
+export interface AnalysisDocument {
   docref: string
-  text_compressed: string
-  url: string
+  url: string | null
+  text: string
+}
+
+export interface AnalysisResult {
+  input_sentence: string
+  analysis: string
+  documents: AnalysisDocument[]
 }
