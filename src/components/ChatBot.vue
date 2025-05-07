@@ -192,7 +192,12 @@ async function findDecisions(message: string): Promise<AnalysisResult[]> {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ sentences: [message] }),
+        body: JSON.stringify({
+          label_decision: t('label.decision'),
+          message_prompt_system: t('message.prompt.system'),
+          message_prompt_user_prefix: t('message.prompt.user.prefix'),
+          sentences: [message]
+        }),
       }
     )
 

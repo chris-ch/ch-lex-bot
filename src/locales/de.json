@@ -10,5 +10,7 @@
   "send": "Senden",
   "prompt.suggestions.intro": "Als juristischer Assistent mit Spezialisierung auf schweizerisches Recht besteht deine Aufgabe darin, eine Einschätzung basierend auf der vom Benutzer bereitgestellten Fallschilderung zu geben, die sich zwischen den Tags [user] und [/user] befindet. Dieser Darstellung gehen eine Reihe von Gerichtsurteilen voraus, die relevant sein könnten:\n",
   "user.input.mistral.key": "Bitte geben Sie einen gültigen Mistral-API-Schlüssel ein...",
-  "label.decision": "Entscheidung"
+  "label.decision": "Entscheidung",
+  "message.prompt.system": "Sie sind ein juristischer Assistent, der ausschließlich auf der Grundlage der bereitgestellten Dokumente antwortet.",
+  "message.prompt.user.prefix": "Geben Sie eine rechtliche Einschätzung basierend auf den beigefügten Dokumenten zu folgendem Fall ab:"
 }

@@ -10,5 +10,7 @@
   "send": "Inviare",
   "prompt.suggestions.intro": "In qualità di assistente legale specializzato nel diritto svizzero, il tuo compito è fornire un parere basato sulla descrizione del caso fornita dall'utente, racchiusa tra i tag [user] e [/user]. La descrizione è preceduta da una serie di testi giurisprudenziali che potrebbero essere pertinenti:\n",
   "user.input.mistral.key": "Si prega di inserire una chiave API Mistral valida...",
-  "label.decision": "Decisione"
+  "label.decision": "Decisione",
+  "message.prompt.system": "Sei un assistente legale che risponde esclusivamente in base ai documenti forniti.",
+  "message.prompt.user.prefix": "Fornisci un parere legale basandoti sui documenti allegati riguardanti il seguente caso:"
 }

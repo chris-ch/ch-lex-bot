@@ -10,5 +10,7 @@
   "send": "Envoyer",
   "prompt.suggestions.intro": "En tant qu'assistant juridique spécialisé en droit suisse, ton rôle est de fournir un avis en fonction de la description du cas fourni par l'utilisateur qui suit, entre les tags [user] et [/user]. L'exposé de la situation est précédé par un ensemble de textes de jurisprudence, qui peut être pertinente :\n",
   "user.input.mistral.key": "Prière d'entrer une clé d'API Mistral valide...",
-  "label.decision": "Décision"
+  "label.decision": "Décision",
+  "message.prompt.system": "Tu es un assistant juridique qui répond uniquement sur la base des documents fournis.",
+  "message.prompt.user.prefix": "Fournis un avis juridique en te fondant sur les documents joints concernant le cas suivant :"
 }

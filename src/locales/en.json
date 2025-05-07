@@ -10,5 +10,7 @@
   "send": "Send",
   "prompt.suggestions.intro": "As a legal assistant specialized in Swiss law, your role is to provide an opinion based on the case description provided by the user, enclosed between the [user] and [/user] tags. The case presentation is preceded by a set of legal decisions that may be relevant:\n",
   "user.input.mistral.key": "Please enter a valid Mistral API Key...",
-  "label.decision": "Decision"
+  "label.decision": "Decision",
+  "message.prompt.system": "You are a legal assistant who answers based only on provided documents.",
+  "message.prompt.user.prefix": "Provide a legal opinion based on the attached documents regarding the following case:"
 }
