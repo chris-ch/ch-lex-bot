@@ -54,8 +54,12 @@
                 <v-col cols="10">
                   <span
                     class="message-text"
-                    v-html="message.sender === 'assistant' ? parseMarkdown(message.text) : message.text"
-                    />
+                    v-html="
+                      message.sender === 'assistant'
+                        ? parseMarkdown(message.text)
+                        : message.text
+                    "
+                  />
                 </v-col>
               </v-row>
             </v-chip>
@@ -100,6 +104,25 @@ import { useI18n } from 'vue-i18n'
 import { fetchAuthSession } from 'aws-amplify/auth'
 import type { AnalysisResult } from '@/types/fedCourtDecisions'
 import { marked } from 'marked'
+
+// Modern renderer object: each method receives a token object
+const renderer = {
+  link({
+    href,
+    title,
+    text,
+  }: {
+    href: string
+    title?: string | null
+    text: string
+  }) {
+    const safeTitle = title ? ` title="${title}"` : ''
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer"${safeTitle}>${text}</a>`
+  },
+}
+
+// Apply using marked.use — NOT setOptions!
+marked.use({ renderer })
 
 function parseMarkdown(text: string): string {
   return marked.parse(text) as string
@@ -204,7 +227,7 @@ async function findDecisions(message: string): Promise<AnalysisResult[]> {
           label_decision: t('label.decision'),
           message_prompt_system: t('message.prompt.system'),
           message_prompt_user_prefix: t('message.prompt.user.prefix'),
-          sentences: [message]
+          sentences: [message],
         }),
       }
     )
@@ -224,21 +247,28 @@ async function findDecisions(message: string): Promise<AnalysisResult[]> {
 async function loadBotResponse(message: string, analyses: AnalysisResult[]) {
   try {
     for (const analysis of analyses) {
-      // Adding analysis as main message
+      let enrichedText = analysis.analysis
+
+      for (const doc of analysis.documents) {
+        const escapedDocRef = doc.docref.replace(
+          /[-\/\\^$*+?.()|[\]{}]/g,
+          '\\$&'
+        ) // Escape for RegExp
+        const regex = new RegExp(`\\b${escapedDocRef}\\b`, 'g')
+
+        // Replace the reference with a Markdown link if it appears
+        if (regex.test(enrichedText)) {
+          enrichedText = enrichedText.replace(
+            regex,
+            `[${doc.docref}](${doc.url})`
+          )
+        }
+      }
+
       chatStore.addMessage({
         sender: 'assistant',
-        text: `🔍 **Analyse** : ${analysis.analysis}`,
+        text: `🔍 **Analyse** : ${enrichedText}`,
       })
-
-      // Adding each document separately
-      for (const doc of analysis.documents) {
-        const docText = `📄 **${doc.docref}**\n${doc.url}`
-
-        chatStore.addMessage({
-          sender: 'assistant',
-          text: docText,
-        })
-      }
     }
   } catch (error) {
     handleError(error)
