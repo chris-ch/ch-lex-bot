@@ -54,29 +54,33 @@
 </template>
 
 <script setup lang="ts">
+import { watch, toRefs } from 'vue'
+import { useAuthenticator } from '@aws-amplify/ui-vue'
 import { useUserStore } from '@/stores/userStore'
-import { useI18n } from 'vue-i18n'
+import { useChatStore } from '@/stores/chatStore'
 import LanguageSwitcher from './components/LanguageSwitcher.vue'
 import ProfileDropdown from './components/ProfileDropdown.vue'
-import { watch, toRefs } from 'vue'
-import { Authenticator, useAuthenticator } from '@aws-amplify/ui-vue'
 
-const { t } = useI18n()
 const { user } = toRefs(useAuthenticator())
 const userStore = useUserStore()
+const chatStore = useChatStore()
 
 watch(
   user,
   u => {
     if (u) {
-      userStore.setUserId(u.userId ?? u.username)
-      if (u.attributes?.email) userStore.setUserEmail(u.attributes.email)
+      const id = u.attributes?.sub || u.username
+      userStore.setUserId(id)
+      userStore.setUserEmail(u.attributes?.email ?? null)
+      localStorage.setItem('userId', id)
+      chatStore.init(id)
+      console.log('User ID:', id)
     } else {
       userStore.$reset()
+      chatStore.clearMessages()
+      localStorage.removeItem('userId')
     }
   },
   { immediate: true }
 )
-
-console.log(t('send'))
 </script>
