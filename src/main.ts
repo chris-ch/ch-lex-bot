@@ -24,6 +24,7 @@ import 'vuetify/styles'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { useUserStore } from './stores/userStore'
+import { useChatStore } from './stores/chatStore'
 
 const revautLightTheme = {
   dark: false,
@@ -99,8 +100,10 @@ const userStore = useUserStore()
 const userId = localStorage.getItem('userId')
 if (userId) {
   userStore.init(userId)
+  const chatStore = useChatStore()
+  chatStore.init(userId)
 } else {
   console.log(
-    'No user ID found; userStore not initialized with specific user data.',
+    'No user ID found; userStore not initialized with specific user data.'
   )
 }
