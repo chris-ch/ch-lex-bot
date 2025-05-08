@@ -52,7 +52,10 @@
                   </template>
                 </v-col>
                 <v-col cols="10">
-                  <span class="message-text">{{ message.text }}</span>
+                  <span
+                    class="message-text"
+                    v-html="message.sender === 'assistant' ? parseMarkdown(message.text) : message.text"
+                    />
                 </v-col>
               </v-row>
             </v-chip>
@@ -96,6 +99,11 @@ import { useChatStore } from '@/stores/chatStore'
 import { useI18n } from 'vue-i18n'
 import { fetchAuthSession } from 'aws-amplify/auth'
 import type { AnalysisResult } from '@/types/fedCourtDecisions'
+import { marked } from 'marked'
+
+function parseMarkdown(text: string): string {
+  return marked.parse(text) as string
+}
 
 // Types
 interface Props {
@@ -216,18 +224,15 @@ async function findDecisions(message: string): Promise<AnalysisResult[]> {
 async function loadBotResponse(message: string, analyses: AnalysisResult[]) {
   try {
     for (const analysis of analyses) {
-      // Ajouter l'analyse en tant que réponse principale
+      // Adding analysis as main message
       chatStore.addMessage({
         sender: 'assistant',
         text: `🔍 **Analyse** : ${analysis.analysis}`,
       })
 
-      // Ajouter chaque document séparément
+      // Adding each document separately
       for (const doc of analysis.documents) {
-        let docText = `📄 **${doc.docref}**\n${doc.text}`
-        if (doc.url) {
-          docText += `\n🔗 [Voir la décision](${doc.url})`
-        }
+        const docText = `📄 **${doc.docref}**\n${doc.url}`
 
         chatStore.addMessage({
           sender: 'assistant',
