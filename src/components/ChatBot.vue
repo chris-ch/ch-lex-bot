@@ -71,7 +71,7 @@
 
   <!-- Input Section -->
 
-  <v-row justify="center" v-if="!messageSent">
+  <v-row justify="center" v-if="!messageSent && !isLoading">
     <v-col cols="12" md="8">
       <v-card class="rounded-xl" outlined>
         <v-row>
