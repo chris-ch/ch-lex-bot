@@ -15,6 +15,7 @@
   "message.prompt.system": "Sei un assistente legale che risponde esclusivamente in base ai documenti forniti.",
   "message.prompt.user.prefix": "Fornisci un parere legale basandoti sui documenti allegati riguardanti il seguente caso:",
   "newRequest": "Nuova Richiesta",
+  "error.503": "Attualmente stiamo operando in modalità ridotta e non siamo riusciti a elaborare la tua richiesta. Riprova più tardi o con un'altra richiesta.",
   "loading": {
     "message": "Sto elaborando la tua richiesta, per favore sii paziente."
   },

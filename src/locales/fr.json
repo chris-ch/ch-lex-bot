@@ -15,6 +15,7 @@
   "message.prompt.system": "Tu es un assistant juridique qui répond uniquement sur la base des documents fournis.",
   "message.prompt.user.prefix": "Fournis un avis juridique en te fondant sur les documents joints concernant le cas suivant :",
   "newRequest": "Nouvelle demande",
+  "error.503": "Nous fonctionnons actuellement en mode réduit et n'avons pas pu traiter votre demande. Veuillez réessayer plus tard ou avec une autre demande.",
   "loading": {
     "message": "Je traite actuellement votre demande, veuillez patienter."
   },

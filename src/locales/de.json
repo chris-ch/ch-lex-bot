@@ -15,6 +15,7 @@
   "message.prompt.system": "Sie sind ein juristischer Assistent, der ausschließlich auf der Grundlage der bereitgestellten Dokumente antwortet.",
   "message.prompt.user.prefix": "Geben Sie eine rechtliche Einschätzung basierend auf den beigefügten Dokumenten zu folgendem Fall ab:",
   "newRequest": "Neue Anfrage",
+  "error.503": "Wir arbeiten derzeit im reduzierten Modus und konnten Ihre Anfrage nicht bearbeiten. Bitte versuchen Sie es später erneut oder mit einer anderen Anfrage.",
   "loading": {
     "message": "Ich bearbeite gerade Ihre Anfrage, bitte haben Sie Geduld."
   },

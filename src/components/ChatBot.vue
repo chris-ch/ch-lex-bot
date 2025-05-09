@@ -276,7 +276,7 @@ async function findDecisions(message: string): Promise<AnalysisResult[]> {
     if (!response.ok) {
       console.error('API Gateway call failed:', response.statusText)
       if (response.status === 503) {
-        setError('We are currently running in a trimmed-down mode and failed to process your request. Please try again later or with a different request.')
+        setError(t('error.503'))
       }
       return []
     }

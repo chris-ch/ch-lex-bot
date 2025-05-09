@@ -15,6 +15,7 @@
   "message.prompt.system": "You are a legal assistant who answers based only on provided documents.",
   "message.prompt.user.prefix": "Provide a legal opinion based on the attached documents regarding the following case:",
   "newRequest": "New Request",
+  "error.503": "We are currently running in a trimmed-down mode and failed to process your request. Please try again later or with a different request.",
   "loading": {
     "message": "I am currently processing your request, please be patient."
   },
