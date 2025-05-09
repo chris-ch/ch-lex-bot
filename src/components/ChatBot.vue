@@ -353,5 +353,4 @@ function startNewRequest() {
   max-width: 800px;
   text-align: center;
 }
-}
 </style>
