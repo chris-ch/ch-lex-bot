@@ -19,7 +19,7 @@
     "message": "Ich bearbeite gerade Ihre Anfrage, bitte haben Sie Geduld."
   },
   "warning": {
-    "message": "Dies ist eine Proof-of-Concept-Version. Referenzdokumente sind auf Rechtsprechung von 2008 bis 2024 beschränkt, neben anderen Einschränkungen."
+    "message": "Dies ist eine Proof-of-Concept-Version. Referenzdokumente sind auf Rechtsprechung von 2008 bis 2024 beschränkt, neben anderen Einschränkungen. Es sollte nicht für reale Rechtsberatung verwendet werden."
   },
   "confirm": {
     "title": "Neue Anfrage bestätigen",

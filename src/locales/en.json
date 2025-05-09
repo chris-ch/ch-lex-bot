@@ -19,7 +19,7 @@
     "message": "I am currently processing your request, please be patient."
   },
   "warning": {
-    "message": "This is a proof-of-concept version. Reference documents are limited to case law from 2008 through 2024, among other limitations."
+    "message": "This is a proof-of-concept version. Reference documents are limited to case law from 2008 through 2024, among other limitations. It should not be used for real-life legal advising."
   },
   "confirm": {
     "title": "Confirm New Request",
