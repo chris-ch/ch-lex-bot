@@ -348,14 +348,10 @@ function startNewRequest() {
   padding: 12px;
   font-size: 18px;
 }
-.bottom-alert {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+.footer-alert {
   margin: 0 auto;
   max-width: 800px;
   text-align: center;
+}
 }
 </style>

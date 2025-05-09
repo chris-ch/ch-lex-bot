@@ -50,7 +50,7 @@
             prominent
             class="footer-alert"
           >
-            This is a proof-of-concept version. Reference documents are limited to jurisprudence from 2008 through 2024, among other limitations.
+            {{ t('warning.message') }}
           </v-alert>
           <span style="color: #e03e29">re</span>&nbsp;<span
             style="color: #d2d2d2"

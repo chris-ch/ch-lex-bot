@@ -18,6 +18,9 @@
   "loading": {
     "message": "Je traite actuellement votre demande, veuillez patienter."
   },
+  "warning": {
+    "message": "Ceci est une version de démonstration. Les documents de référence sont limités à la jurisprudence de 2008 à 2024, parmi d'autres limitations."
+  },
   "confirm": {
     "title": "Confirmer la nouvelle demande",
     "message": "Cela supprimera le chat actuel. Voulez-vous continuer?",

@@ -18,6 +18,9 @@
   "loading": {
     "message": "Ich bearbeite gerade Ihre Anfrage, bitte haben Sie Geduld."
   },
+  "warning": {
+    "message": "Dies ist eine Proof-of-Concept-Version. Referenzdokumente sind auf Rechtsprechung von 2008 bis 2024 beschränkt, neben anderen Einschränkungen."
+  },
   "confirm": {
     "title": "Neue Anfrage bestätigen",
     "message": "Dies wird den aktuellen Chat löschen. Möchten Sie fortfahren?",

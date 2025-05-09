@@ -18,6 +18,9 @@
   "loading": {
     "message": "I am currently processing your request, please be patient."
   },
+  "warning": {
+    "message": "This is a proof-of-concept version. Reference documents are limited to case law from 2008 through 2024, among other limitations."
+  },
   "confirm": {
     "title": "Confirm New Request",
     "message": "This will delete the current chat. Do you want to proceed?",
