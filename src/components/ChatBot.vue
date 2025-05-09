@@ -197,7 +197,7 @@ async function sendMessage() {
 
   chatStore.addMessage({ sender: 'user', text: trimmedMessage })
 
-  // Call Lambda and get results
+  messageSent.value = true
   const decisions = await findDecisions(trimmedMessage)
 
   // Pass results to loadBotResponse
