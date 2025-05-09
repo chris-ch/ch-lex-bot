@@ -26,7 +26,11 @@ const { t } = useI18n()
 const userStore = useUserStore()
 
 const dropdown = ref(false)
-const menuItems = ['Profile', 'Settings', t('logout')]
+const menuItems = ref(['Profile', 'Settings', t('logout')])
+
+watchEffect(() => {
+  menuItems.value = ['Profile', 'Settings', t('logout')]
+})
 
 const handleMenuClick = (item: string) => {
   console.log('Menu item clicked:', item)
