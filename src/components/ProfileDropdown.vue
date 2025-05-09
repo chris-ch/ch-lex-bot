@@ -26,10 +26,10 @@ const { t } = useI18n()
 const userStore = useUserStore()
 
 const dropdown = ref(false)
-const menuItems = ref(['Profile', 'Settings', t('logout')])
+const menuItems = ref([t('profile'), t('settings'), t('logout')])
 
 watchEffect(() => {
-  menuItems.value = ['Profile', 'Settings', t('logout')]
+  menuItems.value = [t('profile'), t('settings'), t('logout')]
 })
 
 const handleMenuClick = (item: string) => {
