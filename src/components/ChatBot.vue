@@ -355,5 +355,4 @@ function startNewRequest() {
   display: flex;
   justify-content: center;
 }
-}
 </style>
