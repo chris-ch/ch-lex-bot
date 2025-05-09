@@ -12,5 +12,15 @@
   "user.input.mistral.key": "Si prega di inserire una chiave API Mistral valida...",
   "label.decision": "Decisione",
   "message.prompt.system": "Sei un assistente legale che risponde esclusivamente in base ai documenti forniti.",
-  "message.prompt.user.prefix": "Fornisci un parere legale basandoti sui documenti allegati riguardanti il seguente caso:"
+  "message.prompt.user.prefix": "Fornisci un parere legale basandoti sui documenti allegati riguardanti il seguente caso:",
+  "newRequest": "Nuova Richiesta",
+  "loading": {
+    "message": "Sto elaborando la tua richiesta, per favore sii paziente."
+  },
+  "confirm": {
+    "title": "Conferma Nuova Richiesta",
+    "message": "Questo eliminerà la chat corrente. Vuoi procedere?",
+    "cancel": "Annulla",
+    "ok": "OK"
+  }
 }
