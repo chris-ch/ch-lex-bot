@@ -35,7 +35,15 @@
         <ProfileDropdown :user="user" @signOut="signOut" />
       </v-app-bar>
 
-      <v-main>
+      <v-alert
+        type="warning"
+        border="start"
+        colored-border
+        prominent
+        class="floating-alert"
+      >
+        This is a proof-of-concept version. Reference documents are limited to jurisprudence from 2008 through 2024, among other limitations.
+      </v-alert>
         <v-container fluid>
           <router-view />
         </v-container>

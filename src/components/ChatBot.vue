@@ -348,4 +348,14 @@ function startNewRequest() {
   padding: 12px;
   font-size: 18px;
 }
+.floating-alert {
+  position: fixed;
+  top: 64px; /* Adjust based on your app bar height */
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  margin: 0 auto;
+  max-width: 800px;
+  text-align: center;
+}
 </style>
