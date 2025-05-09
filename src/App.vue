@@ -65,11 +65,13 @@
 <script setup lang="ts">
 import { watch, toRefs } from 'vue'
 import { useAuthenticator } from '@aws-amplify/ui-vue'
+import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/userStore'
 import { useChatStore } from '@/stores/chatStore'
 import LanguageSwitcher from './components/LanguageSwitcher.vue'
 import ProfileDropdown from './components/ProfileDropdown.vue'
 
+const { t } = useI18n()
 const { user } = toRefs(useAuthenticator())
 const userStore = useUserStore()
 const chatStore = useChatStore()
