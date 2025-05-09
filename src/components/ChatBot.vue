@@ -354,14 +354,5 @@ function startNewRequest() {
   padding: 12px;
   font-size: 18px;
 }
-.footer-alert {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  text-align: center;
-  margin: 0 auto;
-  max-width: 800px;
-}
-}
+
 </style>

@@ -41,17 +41,20 @@
         </v-container>
       </v-main>
 
-      <v-footer app color="#BBBBBB" elevation="5" class="justify-end">
-        <div>
+      <v-footer app color="#BBBBBB" elevation="5" class="d-flex flex-column">
+        <div class="w-100 text-center">
           <v-alert
             type="warning"
             border="start"
             colored-border
             prominent
-            class="footer-alert"
+            class="footer-alert mx-auto"
+            max-width="800px"
           >
             {{ t('warning.message') }}
           </v-alert>
+        </div>
+        <div class="d-flex justify-end w-100 mt-2">
           <span style="color: #e03e29">re</span>&nbsp;<span
             style="color: #d2d2d2"
             >|</span
@@ -95,3 +98,10 @@ watch(
   { immediate: true }
 )
 </script>
+
+<style>
+.footer-alert {
+  width: 100%;
+  max-width: 800px !important;
+}
+</style>
