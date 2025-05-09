@@ -16,7 +16,7 @@
   <v-row justify="center">
     <v-col cols="12" md="8">
       <v-card class="rounded-xl" outlined>
-        <v-card-title>Lex 🇨🇭 Bot</v-card-title>
+        <v-card-title>Elvia 🇨🇭 Index</v-card-title>
         <v-card-subtitle>{{ t('bot.welcome') }}</v-card-subtitle>
         <v-card-text>
           <p class="text-body-1 mb-6">{{ t('bot.role') }}</p>

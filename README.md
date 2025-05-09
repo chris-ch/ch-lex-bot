@@ -1,4 +1,4 @@
-# ⚖️ Lex Bot 🇨🇭
+# ⚖️ Elvia Index 🇨🇭
 
 ## Contributing
 

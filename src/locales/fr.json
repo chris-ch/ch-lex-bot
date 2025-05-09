@@ -2,10 +2,9 @@
   "profile": "Profil",
   "settings": "Paramètres",
   "bot.welcome": "Bienvenue sur votre assistant intelligent pour la recherche juridique.",
-  "bot.role": "Je suis là pour vous guider dans la description de votre affaire et vous aider à trouver les documents légaux pertinents dans notre vaste base de données. Je vous poserai des questions ciblées pour comprendre les détails essentiels de votre cas. En utilisant ces informations, je parcourrai notre bibliothèque complète de jurisprudence, de lois et de commentaires juridiques pour vous fournir les ressources les plus pertinentes.",
+  "bot.role": "Je suis là pour vous aider à trouver les documents juridiques pertinents dans notre vaste base de données. À partir des informations essentielles relatives à votre cas, j'explorerai notre bibliothèque complète de jurisprudence, de lois et de commentaires pour vous fournir les ressources les plus pertinentes.",
   "bot.purpose": "Mon objectif est de simplifier votre processus de recherche juridique, vous permettant ainsi de vous concentrer sur l'analyse et l'application de ces informations à votre affaire spécifique.",
   "bot.start": "Commençons par décrire votre situation juridique !",
-  "mistral.key": "Veuillez renseigner votre clé d'API Mistral avant de poursuivre :",
   "user.case.description": "Veuillez décrire brièvement votre situation ou question juridique...",
   "error.unknown": "An unkown error occurred: ",
   "logout": "Déconnexion",
@@ -20,7 +19,7 @@
     "message": "Je traite actuellement votre demande, veuillez patienter."
   },
   "warning": {
-    "message": "Ceci est une version de démonstration. Les documents de référence sont limités à la jurisprudence de 2008 à 2024, parmi d'autres restrictions. Il ne doit pas être utilisé pour des conseils juridiques réels."
+    "message": "Ceci est une version de démonstration. Les documents de référence se limitent à la jurisprudence de 2008 à 2024 et sont soumis à d'autres restrictions. Elle ne doit pas être utilisée à des fins de conseil juridique."
   },
   "confirm": {
     "title": "Confirmer la nouvelle demande",

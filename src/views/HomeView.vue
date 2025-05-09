@@ -6,7 +6,7 @@ import ChatBot from '../components/ChatBot.vue'
   <!-- App Logo -->
   <v-row justify="center">
     <v-col cols="auto">
-      <img alt="LexBot logo" src="../assets/logo.svg" width="100" />
+      <img alt="Elvia logo" src="../assets/logo.svg" width="100" />
     </v-col>
   </v-row>
 
