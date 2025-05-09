@@ -19,7 +19,7 @@
     "message": "Je traite actuellement votre demande, veuillez patienter."
   },
   "warning": {
-    "message": "Ceci est une version de démonstration. Les documents de référence sont limités à la jurisprudence de 2008 à 2024, parmi d'autres limitations. Il ne doit pas être utilisé pour des conseils juridiques réels."
+    "message": "Ceci est une version de démonstration. Les documents de référence sont limités à la jurisprudence de 2008 à 2024, parmi d'autres restrictions. Il ne doit pas être utilisé pour des conseils juridiques réels."
   },
   "confirm": {
     "title": "Confirmer la nouvelle demande",
