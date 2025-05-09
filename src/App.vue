@@ -35,20 +35,21 @@
         <ProfileDropdown :user="user" @signOut="signOut" />
       </v-app-bar>
 
-      <v-alert
-        type="warning"
-        border="start"
-        colored-border
-        prominent
-        class="floating-alert"
-      >
-        This is a proof-of-concept version. Reference documents are limited to jurisprudence from 2008 through 2024, among other limitations.
-      </v-alert>
       <v-main>
         <v-container fluid>
           <router-view />
         </v-container>
       </v-main>
+
+      <v-alert
+        type="warning"
+        border="start"
+        colored-border
+        prominent
+        class="bottom-alert"
+      >
+        This is a proof-of-concept version. Reference documents are limited to jurisprudence from 2008 through 2024, among other limitations.
+      </v-alert>
 
       <v-footer app color="#BBBBBB" elevation="5" class="justify-end">
         <div>

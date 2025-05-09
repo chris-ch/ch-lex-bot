@@ -348,9 +348,9 @@ function startNewRequest() {
   padding: 12px;
   font-size: 18px;
 }
-.floating-alert {
+.bottom-alert {
   position: fixed;
-  top: 64px; /* Adjust based on your app bar height */
+  bottom: 0;
   left: 0;
   right: 0;
   z-index: 1000;
