@@ -13,4 +13,11 @@
   "label.decision": "Decision",
   "message.prompt.system": "You are a legal assistant who answers based only on provided documents.",
   "message.prompt.user.prefix": "Provide a legal opinion based on the attached documents regarding the following case:"
+  "newRequest": "New Request",
+  "confirm": {
+    "title": "Confirm New Request",
+    "message": "This will delete the current chat. Do you want to proceed?",
+    "cancel": "Cancel",
+    "ok": "OK"
+  }
 }

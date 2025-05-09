@@ -13,4 +13,11 @@
   "label.decision": "Entscheidung",
   "message.prompt.system": "Sie sind ein juristischer Assistent, der ausschließlich auf der Grundlage der bereitgestellten Dokumente antwortet.",
   "message.prompt.user.prefix": "Geben Sie eine rechtliche Einschätzung basierend auf den beigefügten Dokumenten zu folgendem Fall ab:"
+  "newRequest": "Neue Anfrage",
+  "confirm": {
+    "title": "Neue Anfrage bestätigen",
+    "message": "Dies wird den aktuellen Chat löschen. Möchten Sie fortfahren?",
+    "cancel": "Abbrechen",
+    "ok": "OK"
+  }
 }
