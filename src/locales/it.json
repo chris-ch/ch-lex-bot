@@ -1,6 +1,7 @@
 {
   "profile": "Profilo",
   "settings": "Impostazioni",
+  "bot.welcome": "Benvenuto nel tuo assistente intelligente per la ricerca legale.",
   "bot.role": "Sono qui per guidarLa nella descrizione del Suo caso e per aiutarLa a trovare i documenti legali pertinenti nel nostro vasto database. Le porrò domande mirate per comprendere i dettagli essenziali del Suo caso. Utilizzando queste informazioni, esaminerò la nostra completa biblioteca di giurisprudenza, leggi e commenti giuridici per fornirLe le risorse più rilevanti.",
   "bot.purpose": "Il mio obiettivo è semplificare il Suo processo di ricerca giuridica, permettendoLe così di concentrarsi sull'analisi e sull'applicazione di queste informazioni al Suo caso specifico.",
   "bot.start": "Iniziamo descrivendo la Sua situazione giuridica!",
