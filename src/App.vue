@@ -44,6 +44,7 @@
       >
         This is a proof-of-concept version. Reference documents are limited to jurisprudence from 2008 through 2024, among other limitations.
       </v-alert>
+      <v-main>
         <v-container fluid>
           <router-view />
         </v-container>
