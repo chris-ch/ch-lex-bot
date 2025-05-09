@@ -98,7 +98,7 @@
   <!-- Loading Indicator -->
   <v-row justify="center" v-if="isLoading">
     <v-col cols="12" md="8">
-      <v-alert type="info" border="left" colored-border>
+      <v-alert type="info" border="start" colored-border>
         <v-progress-circular
           indeterminate
           color="primary"
