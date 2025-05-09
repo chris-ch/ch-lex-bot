@@ -108,7 +108,7 @@
       </v-alert>
     </v-col>
   </v-row>
-  <v-row justify="center" v-if="messageSent">
+  <v-row justify="center" v-if="messageSent || chatStore.messages.length > 0">
     <v-col cols="12" md="8">
       <v-btn color="warning" @click="confirmNewRequest">{{
         t('newRequest')
