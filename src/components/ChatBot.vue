@@ -355,10 +355,11 @@ function startNewRequest() {
   font-size: 18px;
 }
 .footer-alert {
-  margin: 0 auto;
-  max-width: 800px;
-  text-align: center;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
 }
 </style>
