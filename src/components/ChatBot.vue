@@ -95,6 +95,24 @@
       </v-card>
     </v-col>
   </v-row>
+  <!-- New Request Button -->
+  <v-row justify="center" v-if="messageSent">
+    <v-col cols="12" md="8">
+      <v-btn color="warning" @click="confirmNewRequest">{{ t('newRequest') }}</v-btn>
+    </v-col>
+  </v-row>
+
+  <!-- Confirmation Dialog -->
+  <v-dialog v-model="showConfirmDialog" max-width="500">
+    <v-card>
+      <v-card-title>{{ t('confirm.title') }}</v-card-title>
+      <v-card-text>{{ t('confirm.message') }}</v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" text @click="cancelNewRequest">{{ t('confirm.cancel') }}</v-btn>
+        <v-btn color="primary" text @click="startNewRequest">{{ t('confirm.ok') }}</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -145,6 +163,7 @@ const chatStore = useChatStore()
 const userMessage = ref('')
 const messageSent = ref(false)
 const showAlert = ref(false)
+const showConfirmDialog = ref(false)
 const errorMessage = ref('')
 
 // Props
@@ -274,6 +293,20 @@ async function loadBotResponse(message: string, analyses: AnalysisResult[]) {
   } catch (error) {
     handleError(error)
   }
+}
+function confirmNewRequest() {
+  showConfirmDialog.value = true
+}
+
+function cancelNewRequest() {
+  showConfirmDialog.value = false
+}
+
+function startNewRequest() {
+  chatStore.clearMessages()
+  userMessage.value = ''
+  messageSent.value = false
+  showConfirmDialog.value = false
 }
 </script>
 
