@@ -14,6 +14,9 @@
   "message.prompt.system": "Sie sind ein juristischer Assistent, der ausschließlich auf der Grundlage der bereitgestellten Dokumente antwortet.",
   "message.prompt.user.prefix": "Geben Sie eine rechtliche Einschätzung basierend auf den beigefügten Dokumenten zu folgendem Fall ab:",
   "newRequest": "Neue Anfrage",
+  "loading": {
+    "message": "Ich bearbeite gerade Ihre Anfrage, bitte haben Sie Geduld."
+  },
   "confirm": {
     "title": "Neue Anfrage bestätigen",
     "message": "Dies wird den aktuellen Chat löschen. Möchten Sie fortfahren?",

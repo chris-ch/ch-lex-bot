@@ -95,7 +95,19 @@
       </v-card>
     </v-col>
   </v-row>
-  <!-- New Request Button -->
+  <!-- Loading Indicator -->
+  <v-row justify="center" v-if="isLoading">
+    <v-col cols="12" md="8">
+      <v-alert type="info" border="left" colored-border>
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          class="mr-3"
+        ></v-progress-circular>
+        {{ t('loading.message') }}
+      </v-alert>
+    </v-col>
+  </v-row>
   <v-row justify="center" v-if="messageSent">
     <v-col cols="12" md="8">
       <v-btn color="warning" @click="confirmNewRequest">{{ t('newRequest') }}</v-btn>
@@ -163,6 +175,7 @@ const chatStore = useChatStore()
 const userMessage = ref('')
 const messageSent = ref(false)
 const showAlert = ref(false)
+const isLoading = ref(false)
 const showConfirmDialog = ref(false)
 const errorMessage = ref('')
 
@@ -217,7 +230,9 @@ async function sendMessage() {
   chatStore.addMessage({ sender: 'user', text: trimmedMessage })
 
   messageSent.value = true
+  isLoading.value = true
   const decisions = await findDecisions(trimmedMessage)
+  isLoading.value = false
 
   // Pass results to loadBotResponse
   await loadBotResponse(trimmedMessage, decisions)

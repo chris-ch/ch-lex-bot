@@ -14,6 +14,9 @@
   "message.prompt.system": "Tu es un assistant juridique qui répond uniquement sur la base des documents fournis.",
   "message.prompt.user.prefix": "Fournis un avis juridique en te fondant sur les documents joints concernant le cas suivant :",
   "newRequest": "Nouvelle demande",
+  "loading": {
+    "message": "Je traite actuellement votre demande, veuillez patienter."
+  },
   "confirm": {
     "title": "Confirmer la nouvelle demande",
     "message": "Cela supprimera le chat actuel. Voulez-vous continuer?",
