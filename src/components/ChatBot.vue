@@ -110,7 +110,9 @@
   </v-row>
   <v-row justify="center" v-if="messageSent">
     <v-col cols="12" md="8">
-      <v-btn color="warning" @click="confirmNewRequest">{{ t('newRequest') }}</v-btn>
+      <v-btn color="warning" @click="confirmNewRequest">{{
+        t('newRequest')
+      }}</v-btn>
     </v-col>
   </v-row>
 
@@ -120,8 +122,12 @@
       <v-card-title>{{ t('confirm.title') }}</v-card-title>
       <v-card-text>{{ t('confirm.message') }}</v-card-text>
       <v-card-actions>
-        <v-btn color="primary" variant="text" @click="cancelNewRequest">{{ t('confirm.cancel') }}</v-btn>
-        <v-btn color="primary" variant="text" @click="startNewRequest">{{ t('confirm.ok') }}</v-btn>
+        <v-btn color="primary" variant="text" @click="cancelNewRequest">{{
+          t('confirm.cancel')
+        }}</v-btn>
+        <v-btn color="primary" variant="text" @click="startNewRequest">{{
+          t('confirm.ok')
+        }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
