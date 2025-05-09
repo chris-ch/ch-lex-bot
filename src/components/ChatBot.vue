@@ -120,8 +120,8 @@
       <v-card-title>{{ t('confirm.title') }}</v-card-title>
       <v-card-text>{{ t('confirm.message') }}</v-card-text>
       <v-card-actions>
-        <v-btn color="primary" text @click="cancelNewRequest">{{ t('confirm.cancel') }}</v-btn>
-        <v-btn color="primary" text @click="startNewRequest">{{ t('confirm.ok') }}</v-btn>
+        <v-btn color="primary" variant="text" @click="cancelNewRequest">{{ t('confirm.cancel') }}</v-btn>
+        <v-btn color="primary" variant="text" @click="startNewRequest">{{ t('confirm.ok') }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
