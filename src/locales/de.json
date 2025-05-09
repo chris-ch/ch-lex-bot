@@ -12,7 +12,7 @@
   "user.input.mistral.key": "Bitte geben Sie einen gültigen Mistral-API-Schlüssel ein...",
   "label.decision": "Entscheidung",
   "message.prompt.system": "Sie sind ein juristischer Assistent, der ausschließlich auf der Grundlage der bereitgestellten Dokumente antwortet.",
-  "message.prompt.user.prefix": "Geben Sie eine rechtliche Einschätzung basierend auf den beigefügten Dokumenten zu folgendem Fall ab:"
+  "message.prompt.user.prefix": "Geben Sie eine rechtliche Einschätzung basierend auf den beigefügten Dokumenten zu folgendem Fall ab:",
   "newRequest": "Neue Anfrage",
   "confirm": {
     "title": "Neue Anfrage bestätigen",

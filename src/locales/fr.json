@@ -12,7 +12,7 @@
   "user.input.mistral.key": "Prière d'entrer une clé d'API Mistral valide...",
   "label.decision": "Décision",
   "message.prompt.system": "Tu es un assistant juridique qui répond uniquement sur la base des documents fournis.",
-  "message.prompt.user.prefix": "Fournis un avis juridique en te fondant sur les documents joints concernant le cas suivant :"
+  "message.prompt.user.prefix": "Fournis un avis juridique en te fondant sur les documents joints concernant le cas suivant :",
   "newRequest": "Nouvelle demande",
   "confirm": {
     "title": "Confirmer la nouvelle demande",
