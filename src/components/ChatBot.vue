@@ -71,7 +71,7 @@
 
   <!-- Input Section -->
 
-  <v-row justify="center">
+  <v-row justify="center" v-if="!messageSent">
     <v-col cols="12" md="8">
       <v-card class="rounded-xl" outlined>
         <v-row>
@@ -142,8 +142,8 @@ const ERROR_CODES = {
 const { t } = useI18n()
 const chatStore = useChatStore()
 
-// Refs
 const userMessage = ref('')
+const messageSent = ref(false)
 const showAlert = ref(false)
 const errorMessage = ref('')
 
@@ -204,6 +204,7 @@ async function sendMessage() {
   await loadBotResponse(trimmedMessage, decisions)
 
   userMessage.value = ''
+  messageSent.value = true
 }
 async function findDecisions(message: string): Promise<AnalysisResult[]> {
   try {
