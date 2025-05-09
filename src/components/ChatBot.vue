@@ -352,5 +352,8 @@ function startNewRequest() {
   margin: 0 auto;
   max-width: 800px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+}
 }
 </style>
