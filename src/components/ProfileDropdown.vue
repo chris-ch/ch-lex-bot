@@ -13,7 +13,7 @@
       >
         <v-list-item-title>
           {{ item }}
-          <span v-if="item === t('profile')" class="text-grey-500">({{ userStore.userId }})</span>
+          <span v-if="item === t('profile')" class="text-grey-500">({{ userStore.userEmail || userStore.userId }})</span>
         </v-list-item-title>
       </v-list-item>
     </v-list>
