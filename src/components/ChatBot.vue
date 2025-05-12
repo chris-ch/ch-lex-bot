@@ -71,7 +71,10 @@
 
   <!-- Input Section -->
 
-  <v-row justify="center" v-if="!messageSent && !isLoading && chatStore.messages.length === 0">
+  <v-row
+    justify="center"
+    v-if="!messageSent && !isLoading && chatStore.messages.length === 0"
+  >
     <v-col cols="12" md="8">
       <v-card class="rounded-xl" outlined>
         <v-row>
@@ -246,12 +249,13 @@ async function sendMessage() {
   userMessage.value = ''
   messageSent.value = true
 }
+
 async function findDecisions(message: string): Promise<AnalysisResult[]> {
   try {
     const session = await fetchAuthSession()
-    const idToken = session.tokens?.idToken?.toString()
+    const accessToken = session.tokens?.accessToken?.toString()
 
-    if (!idToken) {
+    if (!accessToken) {
       throw new Error('Not authenticated')
     }
 
@@ -260,7 +264,7 @@ async function findDecisions(message: string): Promise<AnalysisResult[]> {
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${idToken}`,
+          Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
         credentials: 'include',
