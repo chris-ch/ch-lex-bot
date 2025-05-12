@@ -83,12 +83,27 @@ watch(
   user,
   u => {
     if (u) {
-      const id = u.attributes?.sub || u.username
+      // Log the entire user object to inspect its structure
+      console.log('User object:', u)
+
+      // Extract user ID
+      const id = u.userId || u.username // userId is directly available in the object
       userStore.setUserId(id)
-      userStore.setUserEmail(u.attributes?.email || u.attributes?.['email'] || u.signInUserSession?.idToken?.payload?.email || u.username || null)
+
+      // Log the details in the signInDetails to find the email
+      console.log('User signInDetails:', u.signInDetails)
+
+      // Extract the email from signInDetails (loginId)
+      const email = u.signInDetails?.loginId || null // Use loginId as email
+      console.log('Extracted Email:', email) // Log the extracted email
+
+      // Set the email only if it's available
+      userStore.setUserEmail(email)
+
       localStorage.setItem('userId', id)
       chatStore.init(id)
       console.log('User ID:', id)
+      console.log('User Email:', email)
     } else {
       userStore.$reset()
       chatStore.clearMessages()
