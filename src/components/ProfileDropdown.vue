@@ -11,7 +11,10 @@
         :key="index"
         @click="handleMenuClick(item)"
       >
-        <v-list-item-title>{{ item }}</v-list-item-title>
+        <v-list-item-title>
+          {{ item }}
+          <span v-if="item === t('profile')" class="text-grey-500">({{ userStore.userId }})</span>
+        </v-list-item-title>
       </v-list-item>
     </v-list>
   </v-menu>
