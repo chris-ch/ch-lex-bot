@@ -85,7 +85,7 @@ watch(
     if (u) {
       const id = u.attributes?.sub || u.username
       userStore.setUserId(id)
-      userStore.setUserEmail(u.attributes?.email ?? null)
+      userStore.setUserEmail(u.attributes?.email || null)
       localStorage.setItem('userId', id)
       chatStore.init(id)
       console.log('User ID:', id)
