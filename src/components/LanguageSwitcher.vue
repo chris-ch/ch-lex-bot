@@ -43,10 +43,11 @@ const locales = [
   { value: 'it', text: 'Italiano', flag: '🇮🇹' },
 ]
 
-const savedLocale = localStorage.getItem('userLanguage') || locales[0].value
+const savedLocale = localStorage.getItem('userLanguage') || i18n.locale.value || locales[0].value
 console.log('saved locale: ' + savedLocale)
 
 selectedLocale.value = savedLocale
+i18n.locale.value = savedLocale
 
 const changeLanguage = (newLocale: string) => {
   if (newLocale) {
