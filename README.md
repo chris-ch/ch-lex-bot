@@ -1,4 +1,4 @@
-# ⚖️ Elvia Index 🇨🇭
+# ⚖️ Judicia 🇨🇭
 
 ## Contributing
 
