@@ -12,6 +12,7 @@
         },
       },
     }"
+    :social-providers="['google', 'facebook']"
     v-slot="{ user, signOut }"
   >
     <!-- Everything inside this slot renders only when the user is signed-in -->
@@ -68,6 +69,7 @@
 <script setup lang="ts">
 import { watch, toRefs } from 'vue'
 import { useAuthenticator } from '@aws-amplify/ui-vue'
+import { fetchUserAttributes, type UserAttributeKey } from 'aws-amplify/auth'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/userStore'
 import { useChatStore } from '@/stores/chatStore'
@@ -79,36 +81,33 @@ const { user } = toRefs(useAuthenticator())
 const userStore = useUserStore()
 const chatStore = useChatStore()
 
+type Attrs = Partial<Record<UserAttributeKey, string>>
+
 watch(
   user,
-  u => {
-    if (u) {
-      // Log the entire user object to inspect its structure
-      console.log('User object:', u)
-
-      // Extract user ID
-      const id = u.userId || u.username // userId is directly available in the object
-      userStore.setUserId(id)
-
-      // Log the details in the signInDetails to find the email
-      console.log('User signInDetails:', u.signInDetails)
-
-      // Extract the email from signInDetails (loginId)
-      const email = u.signInDetails?.loginId || null // Use loginId as email
-      console.log('Extracted Email:', email) // Log the extracted email
-
-      // Set the email only if it's available
-      userStore.setUserEmail(email)
-
-      localStorage.setItem('userId', id)
-      chatStore.init(id)
-      console.log('User ID:', id)
-      console.log('User Email:', email)
-    } else {
+  async u => {
+    if (!u) {
+      // signed-out
       userStore.$reset()
       chatStore.clearMessages()
       localStorage.removeItem('userId')
+      return
     }
+
+    // ---- signed-in ----
+    const id = u.userId ?? u.username
+    userStore.setUserId(id)
+    localStorage.setItem('userId', id)
+
+    const attrs: Attrs = await fetchUserAttributes().catch(() => ({}) as Attrs)
+    const email = attrs.email ?? u.signInDetails?.loginId ?? null
+
+    userStore.setUserEmail(email)
+    console.log('Attributes  :', attrs)
+    console.log('Email chosen:', email)
+
+    userStore.setUserEmail(email)
+    chatStore.init(id)
   },
   { immediate: true }
 )

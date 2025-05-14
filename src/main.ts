@@ -3,7 +3,6 @@ import { amplifyConfig } from './aws-config'
 
 Amplify.configure(amplifyConfig)
 
-// ⬇️ NEW lines
 import AmplifyVue from '@aws-amplify/ui-vue'
 import '@aws-amplify/ui-vue/styles.css' // <- default Amplify UI theme
 
