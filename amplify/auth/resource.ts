@@ -5,6 +5,7 @@ import { defineAuth, secret } from '@aws-amplify/backend'
  * @see https://docs.amplify.aws/gen2/build-a-backend/auth
  */
 export const auth = defineAuth({
+  name: 'lexbotauth', // all lower-case
   loginWith: {
     email: true,
     externalProviders: {
