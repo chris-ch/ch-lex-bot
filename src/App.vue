@@ -4,12 +4,6 @@
       signUp: {
         email: { order: 1 },
         password: { order: 2 },
-        'custom:openai-api-key': {
-          label: 'OpenAI API Key (Optional)',
-          placeholder: 'sk-...',
-          required: false,
-          order: 1,
-        },
       },
     }"
     :social-providers="['google', 'facebook']"
