@@ -6,7 +6,7 @@
         password: { order: 2 },
       },
     }"
-    :social-providers="['google', 'facebook']"
+    :social-providers="['google']"
     v-slot="{ user, signOut }"
   >
     <!-- Everything inside this slot renders only when the user is signed-in -->
